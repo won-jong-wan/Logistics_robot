@@ -5,18 +5,20 @@
 //***************************************************//
 파일 추가 및 수정 후
 git status
-git add *
+git add -A
 git status
 git commit -a -m '하고싶은말(필수)'
 git log
 -> 체크 후 push
 
 git push origin main
-
+(origin에서 main으로 가는 경우 push만 써도 됨)
 
 
 파일 불러오기
 git status
 git pull origin main
+
+(origin에서 main으로 가는 경우 pull만 써도 됨)
 
 
