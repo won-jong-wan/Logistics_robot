@@ -1,0 +1,17 @@
+파일 추가 및 수정 후
+git status
+git add *
+git status
+git commit -a -m '하고싶은말(필수)'
+git log
+-> 체크 후 push
+
+git push origin main
+
+
+
+파일 불러오기
+git status
+git pull origin main
+
+
