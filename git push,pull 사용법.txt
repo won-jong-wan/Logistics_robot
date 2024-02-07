@@ -9,6 +9,7 @@ git add -A
 git status
 git commit -a -m '하고싶은말(필수)'
 git log
+-> 여기서 만약에 탈출이 불가능 할 경우 shift+q 버튼 입력!
 -> 체크 후 push
 
 git push origin main
