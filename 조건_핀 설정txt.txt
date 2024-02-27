@@ -11,7 +11,7 @@ TIM3 ch1 2: 바퀴모터 pwm1, 2  : PA6 , PC7
 TIM4 ch1 2 : 엔코더 측정1  pd12 13
 TIM2 ch1 2 :  엔코더 측정2  PA15, PB3
 
-TIM6 PID 샘플링 주기 0.0001s
+TIM6 PID 샘플링 주기 0.001s
 84
 100
 
@@ -19,13 +19,15 @@ tim13  0.0001/4  //테스트용
 84/4
 100
 
-TIM14 RPM 측정 타이머 0.01s
+TIM14 RPM 측정 타이머 0.1s
 
 센서 샘플링 tim8_  
-adc1 in3 4  
-PA3  PA4
+adc1 in3                     in4  
+       PA3 :전류센서       PA4
 
-
+ADC3 IN12  IN13 IN14   
+       PC2   PC3  PF4  
+                        : 배터리 전압측정
 초음파센서 tim1
 인풋  Pd6  에코
 아웃풋  PD7 트리거
