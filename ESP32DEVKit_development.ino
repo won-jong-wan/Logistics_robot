@@ -1,6 +1,8 @@
 //현재 이 프로그램에서 사용한 핀
 //GPIO: 25,26,27,14
 //UART : RX : 16, TX : 17
+//Vin,GND  STM에 연결해야 제대로 작동함-전압이슈인듯
+
 #include <WiFi.h>
 #include <rrd.h>
 #include <Ticker.h>
@@ -12,7 +14,7 @@ const char* ssid     = "orugu";
 const char* password = "bgct47264";
 char* RX_Value = "";
 WiFiServer server(80);
-char received_value[8];
+char received_value[9];
 char buffer[20];               //통신을 할때 buffer배열에 전송받은 데이터 입력
 char bufferIndex = 0; 
 char value_1;
@@ -23,7 +25,28 @@ char value_5;
 char value_6;
 char value_7;
 char value_8;
+char value_9;
 char* status_now = "off";
+TaskHandle_t subtask;
+
+void Subtask(void *pvParameter)
+{
+  while(1)
+  {
+    if(Serial2.available()&&(Serial2.read()==63))
+      {
+      received_value[0] = Serial2.read();
+      received_value[1] = Serial2.read();
+      received_value[2] = Serial2.read();             
+      received_value[3] = Serial2.read();
+      received_value[4] = Serial2.read();
+      received_value[5] = Serial2.read();
+      received_value[6] = Serial2.read();
+      received_value[7] = Serial2.read();
+    //  received_value[8] = Serial2.read();
+      }
+  }
+}
 
 void setup()
 {
@@ -36,7 +59,7 @@ void setup()
     // We start by connecting to a WiFi network
     Serial.print("Connecting to ");
     Serial.println(ssid);
-
+    xTaskCreatePinnedToCore(Subtask,"subtask",10000,NULL,0,&subtask,1);
     WiFi.begin(ssid, password);
 
     while (WiFi.status() != WL_CONNECTED) {
@@ -75,15 +98,19 @@ void loop(){
 
             // HTTP 내용관련
             // the content of the HTTP response follows the header:
-            client.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />");
+            client.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
             client.print("<meta http-equiv=\"Refresh\" content=\"3\">");
-            client.print("<a href=\"/START\"> <img src=https://i.ebayimg.com/images/g/asUAAOSwHmNhvm6r/s-l1600.webp width =\"100px\" height =\"100px\"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-            client.print("");
-            client.print("<a href=\"/UP\"><img src =https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Clockwise_arrow.svg/140px-Clockwise_arrow.svg.png width =\"100px\" height =\"100px\" CW</a><br>");
-            
+            client.print("<a href=\"/START\"> <img src=https://cdn.discordapp.com/attachments/1214089641125347379/1214092023758590052/power_on.png?ex=65f7da4f&is=65e5654f&hm=fc3261729481be99021ab19a9c68211dde73c677cce4f92e2bf81fc9b48f89f2& width =\"100px\" height =\"100px\"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+            client.print("<a href=\"/UP\"><img src =https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Clockwise_arrow.svg/140px-Clockwise_arrow.svg.png width =\"100px\" height =\"100px\"></a>&nbsp;&nbsp;&nbsp;");
+            client.print("<a href=\"/mode1\"><img src =https://cdn.discordapp.com/attachments/1214089641125347379/1214098069247893555/mode_1.png?ex=65f7dff0&is=65e56af0&hm=a65e4bbae9fe1ad21683193ad50370b8844b58e83214af7ef5ca34ca77a33d03&></a>&nbsp;");
+            client.print("<a href=\"/mode2\"><img src = https://cdn.discordapp.com/attachments/1214089641125347379/1214098069537431552/mode_2.png?ex=65f7dff0&is=65e56af0&hm=8e3ba0172e97ead629cb9c68dddf97f26ab0bd33da6294fda3e94454191cb221&></a><br>");
+ 
 
-            client.print("<a href=\"/STOP\"><img src=https://i.etsystatic.com/36379723/r/il/0d4817/4037945474/il_794xN.4037945474_7wcx.jpg width = \"100px\" height = \"100px\" motor stop></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-            client.print("<a href=\"/DOWN\"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Counterclockwise_arrow.svg/140px-Counterclockwise_arrow.svg.png width = \"100px\" height = \"100px\" CCW></a><br>");
+            client.print("<a href=\"/STOP\"><img src=https://cdn.discordapp.com/attachments/1214089641125347379/1214091898831110204/power_off.png?ex=65f7da31&is=65e56531&hm=f1f06ee5da21765b9dcebf10848040cd0076539772a59ed84027565e23dca2e7& width = \"100px\" height = \"100px\" motor stop></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+            client.print("<a href=\"/DOWN\"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Counterclockwise_arrow.svg/140px-Counterclockwise_arrow.svg.png width = \"100px\" height = \"100px\" CCW></a>&nbsp;&nbsp;&nbsp;");
+            client.print("<a href=\"/mode3\"><img src =https://cdn.discordapp.com/attachments/1214089641125347379/1214098069830766592/mode_3.png?ex=65f7dff0&is=65e56af0&hm=db8447af4956d60b1106809c2e95cc3da0dca338c1061b695b29351a5e9818d0&></a>&nbsp;");
+            client.print("<a href=\"/mode4\"><img src =https://cdn.discordapp.com/attachments/1214089641125347379/1214098070115975188/mode_4.png?ex=65f7dff0&is=65e56af0&hm=580e7b36db05d0c07054dffff80377f8da9eb4dafd98c9563a1926ec93443f7a&></a>&nbsp;&nbsp;<br>      ");
+ 
             client.print("status : ");
             client.print(status_now);
             client.print("<br>");
@@ -91,23 +118,10 @@ void loop(){
             client.print("<a href=\"/PWM5\">PWM=5</a>&nbsp;&nbsp;<br>");
             client.print("<a href=\"/PWM20\">PWM=20</a>&nbsp;&nbsp;   ");
             client.print("<a href=\"/PWM100\">PWM=100</a> <br>      ");
-            client.print("<a href=\"/mode1\">mode1-33</a>&nbsp;&nbsp;      ");
-            client.print("<a href=\"/mode2\">mode2-34</a>&nbsp;&nbsp;      ");
-            client.print("<a href=\"/mode4\">mode4-36</a>&nbsp;&nbsp;<br>      ");
-            client.print("<button onClick=\"window.location.reload()\">refresh</button>");
+           client.print("<button onClick=\"window.location.reload()\">refresh</button>");
             //HTTP input 내용 갱신
 
-            if(Serial2.available()&&(Serial2.read()==63))
-              {
-              received_value[0] = Serial2.read();
-              received_value[1] = Serial2.read();
-              received_value[2] = Serial2.read();             
-              received_value[3] = Serial2.read();
-              received_value[4] = Serial2.read();
-              received_value[5] = Serial2.read();
-              received_value[6] = Serial2.read();
-              received_value[7] = Serial2.read();
-              }
+
             
             
             //received value list
@@ -119,7 +133,13 @@ void loop(){
             client.write(received_value[4]);
             client.write(received_value[5]);
             client.write(received_value[6]);
-            client.write(received_value[7]);            
+            client.write(received_value[7]);
+            // client.write(received_value[8]);
+            // client.write(received_value[8]);  
+            // client.write(received_value[8]);  
+            // client.write(received_value[8]);  
+              
+
             //1. 전류값 1
             Serial.write(received_value[0]);
             Serial.write(received_value[1]);
@@ -158,6 +178,10 @@ void loop(){
             value_8 = received_value[7];
             client.print(value_7);
             client.print(value_8);
+            //value_9 = received_value[8];
+            //value_10 =received_value[9];
+            //client.print(value_9);
+            //client.print()
             client.print("<br>");
            // client.print(received_value);
             //뭔지 모름 
