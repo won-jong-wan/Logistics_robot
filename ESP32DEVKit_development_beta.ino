@@ -1,6 +1,8 @@
 //현재 이 프로그램에서 사용한 핀
 //GPIO: 25,26,27,14
 //UART : RX : 16, TX : 17
+//Vin,GND  STM에 연결해야 제대로 작동함-전압이슈인듯
+
 #include <WiFi.h>
 #include <rrd.h>
 #include <Ticker.h>
@@ -12,7 +14,7 @@ const char* ssid     = "orugu";
 const char* password = "bgct47264";
 char* RX_Value = "";
 WiFiServer server(80);
-char received_value[8];
+char received_value[9];
 char buffer[20];               //통신을 할때 buffer배열에 전송받은 데이터 입력
 char bufferIndex = 0; 
 char value_1;
@@ -23,7 +25,8 @@ char value_5;
 char value_6;
 char value_7;
 char value_8;
-
+char value_9;
+char* status_now = "off";
 
 void setup()
 {
@@ -75,18 +78,20 @@ void loop(){
 
             // HTTP 내용관련
             // the content of the HTTP response follows the header:
-            client.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />");
-            client.print("<a href=\"/START\"> <img src=https://static-00.iconduck.com/assets.00/power-symbol-emoji-457x512-37ndyg2l.png></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+            client.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
+            client.print("<meta http-equiv=\"Refresh\" content=\"3\">");
+            client.print("<a href=\"/START\"> <img src=https://i.ebayimg.com/images/g/asUAAOSwHmNhvm6r/s-l1600.webp width =\"100px\" height =\"100px\"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
             client.print("");
-
-            client.print("<a href=\"/UP\"> CW</a><br>");
+            client.print("<a href=\"/UP\"><img src =https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Clockwise_arrow.svg/140px-Clockwise_arrow.svg.png width =\"100px\" height =\"100px\" CW</a><br>");
             
 
-            client.print("<a href=\"/STOP\"> motor stop</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-            client.print("<a href=\"/DOWN\"> CCW</a><br>");
-            
+            client.print("<a href=\"/STOP\"><img src=https://i.etsystatic.com/36379723/r/il/0d4817/4037945474/il_794xN.4037945474_7wcx.jpg width = \"100px\" height = \"100px\" motor stop></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+            client.print("<a href=\"/DOWN\"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Counterclockwise_arrow.svg/140px-Counterclockwise_arrow.svg.png width = \"100px\" height = \"100px\" CCW></a><br>");
+            client.print("status : ");
+            client.print(status_now);
+            client.print("<br>");
             client.print("<a href=\"/PWM0\">PWM=0</a>&nbsp;&nbsp;      ");
-            client.print("<a href=\"/PWM5\">PWM=5</a>&nbsp;&nbsp;     ");
+            client.print("<a href=\"/PWM5\">PWM=5</a>&nbsp;&nbsp;<br>");
             client.print("<a href=\"/PWM20\">PWM=20</a>&nbsp;&nbsp;   ");
             client.print("<a href=\"/PWM100\">PWM=100</a> <br>      ");
             client.print("<a href=\"/mode1\">mode1-33</a>&nbsp;&nbsp;      ");
@@ -105,6 +110,7 @@ void loop(){
               received_value[5] = Serial2.read();
               received_value[6] = Serial2.read();
               received_value[7] = Serial2.read();
+            //  received_value[8] = Serial2.read();
               }
             
             
@@ -117,7 +123,8 @@ void loop(){
             client.write(received_value[4]);
             client.write(received_value[5]);
             client.write(received_value[6]);
-            client.write(received_value[7]);            
+            client.write(received_value[7]);
+           // client.write(received_value[8]);            
             //1. 전류값 1
             Serial.write(received_value[0]);
             Serial.write(received_value[1]);
@@ -156,6 +163,8 @@ void loop(){
             value_8 = received_value[7];
             client.print(value_7);
             client.print(value_8);
+           // value_9 = received_value[8];
+            client.print(value_9);
             client.print("<br>");
            // client.print(received_value);
             //뭔지 모름 
@@ -186,6 +195,7 @@ void loop(){
         {
         Serial2.write(48);                  //0
         Serial2.write(48);
+        
         }
 
         if (currentLine.endsWith("GET /STOP")) {
