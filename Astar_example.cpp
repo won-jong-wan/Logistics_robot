@@ -5,74 +5,158 @@
 
 using namespace std;
 
-// 각 격자 셀의 상태 정의
-enum class CellType {
-    START,
-    USABLE,
-    BLOCKED,
-    TARGET
+enum class CellT {
+	USABLE,
+	BLOCKED,
+	TARGET,
+};
+struct Cell{
+	int x, y;
+	CellT type;
+	Cell* parentP;
+	Cell(int x = 0, int y = 0, CellT type = CellT::USABLE
+		, Cell* parentP = nullptr) : x(x), y(y), type(type), parentP(parentP) {};
 };
 
-// 각 셀의 상태와 G, H, F 값을 저장하는 구조체
-struct Cell {
-    int x, y; //x=> y=^ 
-    CellType type;
-    int g, h, f;
-    Cell* parent;
+//Grid
+class Grid{
+public:
+	Grid(int x, int y);
+	~Grid();
 
-    Cell(int x, int y, CellType t) : x(x), y(y), type(t), g(0), h(0), f(0), parent(nullptr) {}
-
-    // 셀 간 거리 계산 (맨해튼 거리 사용)
-    int distance(Cell* other) const {
-        return abs(x - other->x) + abs(y - other->y);
-    }
-    void updateFGH(int hBase, Cell* endGrid) {
-        h = hBase - distance(endGrid);
-        g = parent->g + 1;
-        f = g + h;
-    }
-    bool operator<(const Cell c) const {
-        return this->f < c.f;
-    }
+	vector<Cell> operator[] (unsigned int idx1);
+	void writeType(int x, int y, CellT type);
+	void writeParent(int x, int y, int px, int py);
+	Cell* ReadParent(int x, int y);
+private:
+	vector<vector<Cell>> cells;
 };
 
+Grid::Grid(int x, int y){
+	cells.assign(y, vector<Cell>(x, Cell()));
+	cout <<cells[0].size() <<" " << cells.size() << endl;
+	for (int i = 0; i < y; i++) {
+		for (int j = 0; j < x; j++) {
+			cells[i][j].y = i;
+			cells[i][j].x = j;
+		}
+	}
+}
 
+Grid::~Grid(){}
+
+vector<Cell> Grid::operator[](unsigned int idx1) {
+	return cells[idx1];
+}
+
+void Grid::writeType(int x, int y, CellT type){
+	cells[y][x].type = type;
+}
+
+void Grid::writeParent(int x, int y, int px, int py){
+	cells[y][x].parentP = &cells[py][px];
+}
+
+Cell* Grid::ReadParent(int x, int y)
+{
+	return cells[y][x].parentP;
+}
+
+//GridMaker
+class GridMaker{
+public:
+	GridMaker(int x=3, int y=2) :x(x), y(y) {};
+	~GridMaker();
+	Grid& make();
+	void deleteGrid(Grid* odd);
+private:
+	int x, y;
+};
+
+GridMaker::~GridMaker(){}
+
+Grid& GridMaker::make()
+{
+	Grid* grid = new Grid(x, y);
+	return (*grid);
+}
+
+void GridMaker::deleteGrid(Grid* odd)
+{
+	delete odd;
+}
+
+
+class GridPathFinder{
+public:
+	GridPathFinder(Grid* grid) : grid(grid) {};
+	vector<Cell> pathPrint(int x, int y);
+
+private:
+	Grid* grid;
+};
+
+//캡슐화 이슈
+vector<Cell> GridPathFinder::pathPrint(int x, int y) {
+	Cell* testCell = grid->ReadParent(x,y);
+	vector<Cell> path;
+	path.push_back((*grid)[y][x]);
+
+	while (testCell->parentP != nullptr) {
+		path.push_back(*testCell);
+		testCell = testCell->parentP;
+	}
+
+	return path;
+}
+
+/*class GridHandler
+{
+public:
+	GridHandler(Grid* grid);
+	~GridHandler();
+
+	void gridWrite(int x, int y, CellT type = CellT::USABLE);
+	void gridRead(int x, int y);
+private:
+	Grid* grid;
+};
+
+GridHandler::GridHandler(Grid* grid):grid(grid){}
+
+GridHandler::~GridHandler(){}
+
+void GridHandler::gridWrite(int x, int y, CellT type){
+	(*grid)[y][x].type = type;
+}
+void GridHandler::gridRead(int x, int y)
+{
+	//cout << grid[y][x].x << endl;
+}*/
 
 int main() {
-    //grid 초기화
-    vector<vector<Cell>> grid = {
-        {Cell(0, 0, CellType::USABLE), Cell(0, 1, CellType::USABLE), Cell(0, 2, CellType::USABLE)},
-        {Cell(1, 0, CellType::USABLE), Cell(1, 1, CellType::USABLE), Cell(1, 2, CellType::USABLE)}
-    };
+	GridMaker GM;
 
-    //시작점, 도착점 설정
-    Cell startGrid = grid[0][0], endGrid = grid[1][2];
+	Grid g0 = GM.make();
 
-    startGrid.type = CellType::START;
-    endGrid.type = CellType::TARGET;
+	cout<<g0[1][2].y<<endl;
 
-    //우선순위 큐 정의
-    priority_queue<Cell> aStarQ;
-    aStarQ.push(startGrid);
+	g0.writeType(1, 1, CellT::BLOCKED);
+	if (g0[1][1].type != CellT::USABLE) {
+		cout << "!" << endl;
+	}
+	else {
+		cout << "?" << endl;
+	}
 
-    //이웃 추가 및 f, g, h 계산 
-    int hBase = startGrid.distance(&endGrid);
-    startGrid.h = hBase - startGrid.distance(&endGrid);
+	g0.writeParent(1, 1, 1, 0);
+	cout << g0.ReadParent(1,1)->y << endl;
 
-    grid[0][1].parent = &startGrid;
-    grid[0][1].updateFGH(hBase, &endGrid);
+	GridPathFinder PF(&g0);
 
-    aStarQ.push(grid[0][1]);
+	vector<Cell> vc = PF.pathPrint(1, 1);
 
-    cout <<aStarQ.top().f <<endl ;
+	cout << vc[0].y << endl;
 
-    //이웃 고려
-    Cell targetCell = startGrid;
-    vector<bool> rlud = { 0, 0, 0, 0 };
-    for (int i = 0; i < 4; i++) {
-         
-    }
-
-
-    return 0;
+	return 0;
 }
