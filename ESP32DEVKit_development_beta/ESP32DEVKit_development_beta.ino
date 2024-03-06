@@ -26,6 +26,9 @@ char value_6;
 char value_7;
 char value_8;
 char value_9;
+char value_10;
+char value_11;
+char value_12;
 char* status_now = "off";
 TaskHandle_t subtask;
 
@@ -43,7 +46,11 @@ void Subtask(void *pvParameter)
       received_value[5] = Serial2.read();
       received_value[6] = Serial2.read();
       received_value[7] = Serial2.read();
-    //  received_value[8] = Serial2.read();
+      received_value[8] = Serial2.read();
+      received_value[9] = Serial2.read();
+      received_value[10] = Serial2.read();
+      received_value[11] = Serial2.read();
+      
       }
   }
 }
@@ -54,7 +61,7 @@ void setup()
     pinMode(LED_BUILTIN,OUTPUT);
     delay(10);
 
-    Serial2.begin(115200,SERIAL_7E1,16,17);
+    Serial2.begin(230400,SERIAL_7E1,16,17);
     
     // We start by connecting to a WiFi network
     Serial.print("Connecting to ");
@@ -134,24 +141,20 @@ void loop(){
             client.write(received_value[5]);
             client.write(received_value[6]);
             client.write(received_value[7]);
-            // client.write(received_value[8]);
-            // client.write(received_value[8]);  
-            // client.write(received_value[8]);  
-            // client.write(received_value[8]);  
+            client.write(received_value[8]);
+            client.write(received_value[9]);   
+            client.write(received_value[10]);   
+            client.write(received_value[11]); 
               
 
-            //1. 전류값 1
+            //1. 배터리
             Serial.write(received_value[0]);
             Serial.write(received_value[1]);
             value_1 = received_value[0];
             value_2 = received_value[1];
-            client.print("<br>Amp1 value: ");            
+            client.print("<br>battery value: ");            
             client.write(value_1);
             client.write(value_2);
-            client.print("<br>");
-
-            //2. 전류값 2
-            client.print("Amp2 value: ");
             Serial.write(received_value[2]);
             Serial.write(received_value[3]);
             value_3 = received_value[2];
@@ -160,28 +163,34 @@ void loop(){
             client.print(value_4);  
             client.print("<br>");
             
-            //3. 속도값 1
-            client.print("speed value 1:");
+            //2. 속도값 
+            client.print("speed value: ");
             Serial.write(received_value[4]);
             Serial.write(received_value[5]);
             value_5 = received_value[4];
             value_6 = received_value[5];
             client.print(value_5);
             client.print(value_6);
-            client.print("<br>");
-            
-            //4. 속도값 2
-            client.print("speed value 2:");
             Serial.write(received_value[6]);
             Serial.write(received_value[7]);
             value_7 = received_value[6];
             value_8 = received_value[7];
             client.print(value_7);
             client.print(value_8);
-            //value_9 = received_value[8];
-            //value_10 =received_value[9];
-            //client.print(value_9);
-            //client.print()
+            client.print("<br>");
+            //3. 위치값
+            client.print("position value: ");
+
+            Serial.println("");
+            value_9 = received_value[8];
+            client.print(value_9);
+            value_10 = received_value[9];
+            client.print(value_10);
+            value_11 = received_value[10];
+            client.print(value_11);
+            value_12 = received_value[11];
+            client.print(value_12);
+            
             client.print("<br>");
            // client.print(received_value);
             //뭔지 모름 
