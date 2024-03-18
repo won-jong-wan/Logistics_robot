@@ -1,3 +1,0 @@
-C:/Users/orugu/Documents/GitHub/Logistics_robot/CMakeFiles/main.exe.dir
-C:/Users/orugu/Documents/GitHub/Logistics_robot/CMakeFiles/ALL_BUILD.dir
-C:/Users/orugu/Documents/GitHub/Logistics_robot/CMakeFiles/ZERO_CHECK.dir

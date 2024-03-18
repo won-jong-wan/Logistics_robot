@@ -1,1 +1,1 @@
-ADD_EXECUTABLE( main.exe main.c linkedList.c )
+ADD_EXECUTABLE( main main.c linkedList.c )
