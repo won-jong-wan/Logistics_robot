@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/won/dev/AstarForStm/build",
+  "command": "/usr/bin/gcc   -g -o CMakeFiles/AstarForStm.dir/main.c.o -c /home/won/dev/AstarForStm/main.c",
+  "file": "/home/won/dev/AstarForStm/main.c"
+},
+{
+  "directory": "/home/won/dev/AstarForStm/build",
+  "command": "/usr/bin/gcc   -g -o CMakeFiles/AstarForStm.dir/linkedList.c.o -c /home/won/dev/AstarForStm/linkedList.c",
+  "file": "/home/won/dev/AstarForStm/linkedList.c"
+}
+]

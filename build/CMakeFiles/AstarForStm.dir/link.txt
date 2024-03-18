@@ -1,0 +1,1 @@
+/usr/bin/gcc -g -rdynamic CMakeFiles/AstarForStm.dir/main.c.o CMakeFiles/AstarForStm.dir/linkedList.c.o -o AstarForStm 
