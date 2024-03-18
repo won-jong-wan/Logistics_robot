@@ -156,15 +156,12 @@ void loop(){
             //HTTP 헤더 관련
             // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
             // and a content-type so the client knows what's coming, then a blank line:
-
             client.println("<font size=20>");
-
             client.println("<title> TESTING</title>");
-
             // HTTP 내용관련
             // the content of the HTTP response follows the header:
             client.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
-            client.print("<meta http-equiv=\"Refresh\" content=\"1\">");
+            //client.print("<meta http-equiv=\"Refresh\" content=\"1\">");    //갱신이 필요할 경우 추가
             client.print("<body style = \"background-image\:url(\'https://images.unsplash.com/photo-1533035353720-f1c6a75cd8ab?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\')\" /n background-repeat\:no-repeat>");
             client.print("<a href=\"/START\"> <img src=https://cdn.discordapp.com/attachments/1214089641125347379/1214092023758590052/power_on.png?ex=65f7da4f&is=65e5654f&hm=fc3261729481be99021ab19a9c68211dde73c677cce4f92e2bf81fc9b48f89f2& width =\"100px\" height =\"100px\"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
             client.print("<a href=\"/UP\"><img src =https://cdn.discordapp.com/attachments/1214089641125347379/1216634375962361876/CW..png?ex=66011a0f&is=65eea50f&hm=63f33085cc57b6a1e4b01b541e296f24cc35aa3fae2bb47e9a5beb9209b92147& width =\"100px\" height =\"100px\"></a>&nbsp;&nbsp;&nbsp;");
@@ -235,7 +232,6 @@ void loop(){
             client.print("<br>");
             //3. 위치값
             client.print("position value: ");
-
             Serial.println("");
             value_9 = received_value[8];
             client.print(value_9);
@@ -245,7 +241,6 @@ void loop(){
             client.print(value_11);
             value_12 = received_value[11];
             client.print(value_12);
-            
             client.print("<br>");
            // client.print(received_value);
             //뭔지 모름 
@@ -254,6 +249,7 @@ void loop(){
             // break out of the while loop:
             break;
             }
+
             if (page_num ==2)
             {
             client.println("<font size=25>");
@@ -263,7 +259,6 @@ void loop(){
             client.print("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />");
             client.print("<meta http-equiv=\"Refresh\" content=\"1\">");
             client.print("<body style = \"background-image\:url(\'https://images.unsplash.com/photo-1533035353720-f1c6a75cd8ab?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D\')\" /n background-repeat\:no-repeat>");
-
             client.print("Testboard for main page&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
             client.print("<a href =\"/return\">Main Page </a>");            
             client.print("디버깅용 수신값: ");
@@ -279,8 +274,54 @@ void loop(){
             client.write(received_value[9]);   
             client.write(received_value[10]);   
             client.write(received_value[11]);
+            
+            Serial.write(received_value[0]);
+            Serial.write(received_value[1]);
+            value_1 = received_value[0];
+            value_2 = received_value[1];
+            client.print("<br>battery value: ");            
+            client.write(value_1);
+            client.write(value_2);
+            Serial.write(received_value[2]);
+            Serial.write(received_value[3]);
+            value_3 = received_value[2];
+            value_4 = received_value[3];
+            client.print(value_3);
+            client.print(value_4);  
+            client.print("<br>");
+            
+            //2. 속도값 
+            client.print("speed value: ");
+            Serial.write(received_value[4]);
+            Serial.write(received_value[5]);
+            value_5 = received_value[4];
+            value_6 = received_value[5];
+            client.print(value_5);
+            client.print(value_6);
+            Serial.write(received_value[6]);
+            Serial.write(received_value[7]);
+            value_7 = received_value[6];
+            value_8 = received_value[7];
+            client.print(value_7);
+            client.print(value_8);
+            client.print("<br>");
+            //3. 위치값
+            client.print("position value: ");
+
+            Serial.println("");
+            value_9 = received_value[8];
+            client.print(value_9);
+            value_10 = received_value[9];
+            client.print(value_10);
+            value_11 = received_value[10];
+            client.print(value_11);
+            value_12 = received_value[11];
+            client.print(value_12);
+            
+            client.print("<br>");
             break;
             }
+
           } 
 
           else {    // if you got a newline, then clear currentLine:
