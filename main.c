@@ -31,11 +31,6 @@ void llpb(LinkedList* LL, void* data){
 
     LL->tailPtr = tail;;
 }*/
-typedef enum _CellT{
-    USABLE,
-    BLOCKED,
-    TARGET,
-}CellT;
 
 typedef enum _RobMovM{
     STOP,
@@ -55,12 +50,22 @@ typedef enum _GrabLev{
     THRID,
 }GrabLev;
 
+typedef enum _CellT{
+    USABLE,
+    BLOCKED,
+    TARGET,
+}CellT;
+
 typedef struct _Cell{
     unsigned int x;
     unsigned int y;
     LinkedList* node;
     CellT state;        
 }Cell;
+
+typedef struct _Grid{
+    Cell grid[4][3];
+}
 
 typedef struct _Robot{
     unsigned int rx;
