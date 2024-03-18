@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "linkedList.h"
 
+/*
 typedef struct _LinkedList{
     unsigned int index;
     struct _LinkedList* headPtr;
@@ -28,6 +30,46 @@ void llpb(LinkedList* LL, void* data){
     tail->detail = data;
 
     LL->tailPtr = tail;;
+}*/
+typedef enum _CellT{
+    USABLE,
+    BLOCKED,
+    TARGET,
+}CellT;
+
+typedef enum _RobMovM{
+    STOP,
+    MOVEX,
+    MOVEY,
+}RobMovM;
+
+typedef enum _RobGraM{
+    UNGRAB,
+    GRAB,
+}RobGraM;
+
+typedef enum _GrabLev{
+    ROBOT,
+    FIRST,
+    SECOND,
+    THRID,
+}GrabLev;
+
+typedef struct _Cell{
+    unsigned int x;
+    unsigned int y;
+    LinkedList* node;
+    CellT state;        
+}Cell;
+
+typedef struct _Robot{
+    unsigned int rx;
+    unsigned int ry;
+    LinkedList* rPass;
+    RobMovM rMovM;
+    RobGraM rGrabM;
+    GrabLev rGrabL;
+    Cell rPostion;
 }
 
 int main(){
