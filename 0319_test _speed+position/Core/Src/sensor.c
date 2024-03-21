@@ -15,15 +15,17 @@ float Distance_Avg;
 uint16_t j=0;
 
 extern TIM_HandleTypeDef htim1;
-extern TIM_HandleTypeDef htim7;
+
 extern TIM_HandleTypeDef htim12;
 
+/*
+ extern TIM_HandleTypeDef htim7;
 void microDelay(uint16_t delay)
 {
 	__HAL_TIM_SET_COUNTER(&htim7,0);
 	while(__HAL_TIM_GET_COUNTER(&htim7) < delay );
 }
-
+*/
 
 
 void distance_sensor (void)
@@ -47,9 +49,9 @@ void distance_sensor (void)
 
     Distance_Sum = Distance + Distance_Sum;
     	  j++;
-    	 	 if(j==150)
+    	 	 if(j==100)
     	 	  {
-    	 		Distance_Avg = Distance_Sum/(150+1);
+    	 		Distance_Avg = Distance_Sum/(100+1);
 
     	 			  j=0;
     	 			 Distance_Sum=0;

@@ -44,6 +44,11 @@ int tim7_flag=0;
 int tim6_flag=0;
 int tim14_flag=0;
 int tim13_flag=0;
+int tim12_flag=0;
+int tim12_test=0;
+
+uint16_t step_pulse_count=0;
+
 extern uint8_t key_value_flag;
 extern uint32_t encoder_count;
 
@@ -99,8 +104,6 @@ uint8_t stop_flag=0;
 
 
 
-extern uint16_t delay_us;
-
 
 
 float RPM_Sum;
@@ -149,7 +152,6 @@ extern ADC_HandleTypeDef hadc3;
 extern DMA_HandleTypeDef hdma_tim4_up;
 extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim6;
-extern TIM_HandleTypeDef htim7;
 extern TIM_HandleTypeDef htim8;
 extern TIM_HandleTypeDef htim12;
 extern TIM_HandleTypeDef htim13;
@@ -443,6 +445,10 @@ void TIM8_BRK_TIM12_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim12);
   /* USER CODE BEGIN TIM8_BRK_TIM12_IRQn 1 */
 
+
+  tim12_flag=1;
+
+  tim12_test++;
   /* USER CODE END TIM8_BRK_TIM12_IRQn 1 */
 }
 
@@ -457,12 +463,29 @@ void TIM8_UP_TIM13_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim8);
   HAL_TIM_IRQHandler(&htim13);
   /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */
-  //0.0001/4
 
-  //GPIOB->ODR ^=1<<0;  //ok
+  if ((TIM13->SR & 0x01) != RESET)	// CC3 interrupt flag
+  	{
+  		TIM13->SR &= ~0x01;	// CC3 Interrupt Claer
 
 
-  tim13_flag=1;
+  		GPIOB->ODR ^= 1<<14;
+
+  		 tim13_flag=1;
+
+  		  step_pulse_count++;
+
+
+
+/*
+  		  if(step_pulse_count==800*2)  //    800*2/rev
+  		  {
+  			  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_13, 1);  //정지
+  			  HAL_TIM_OC_Stop_IT(&htim13,TIM_CHANNEL_1);
+  		  }
+*/
+
+  	}
   /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
 }
 
@@ -479,8 +502,7 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
   /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 1 */
 
  tim14_flag++;
-if(tim14_flag>20)
-	tim14_flag=0;
+
 //motor1
   ENCODER_OLD= ENCODER_NEW;
   ENCODER_NEW = TIM4->CNT;
@@ -511,8 +533,6 @@ if(tim14_flag>20)
 
     //	printf("RPS = %d \r\n",RPS);
    // 	 printf("RPM = %d \r\n",RPM);
-
-    	step_RPM = 1.8/2/delay_us/6*1000000;
 
 
 
@@ -582,7 +602,7 @@ void TIM6_DAC_IRQHandler(void)
 
 
 
-
+/*
 
 	if(key_flag==1)
 	  {
@@ -631,7 +651,7 @@ void TIM6_DAC_IRQHandler(void)
 	      	           }
 
 	      	    }
-
+*/
 
 
 
@@ -797,22 +817,6 @@ void TIM6_DAC_IRQHandler(void)
 
 
   /* USER CODE END TIM6_DAC_IRQn 1 */
-}
-
-/**
-  * @brief This function handles TIM7 global interrupt.
-  */
-void TIM7_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM7_IRQn 0 */
-
-  /* USER CODE END TIM7_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim7);
-  /* USER CODE BEGIN TIM7_IRQn 1 */
-  tim7_flag=1;
-
-
-  /* USER CODE END TIM7_IRQn 1 */
 }
 
 /**
