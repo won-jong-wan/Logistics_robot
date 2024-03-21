@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "robot.h"
 
-int main(int, char**){
-    printf("%d\n",sizeof(LinkedList));
+int main(){
+    printf("%lu\n",sizeof(LinkedList));
 
     LinkedList* LL= initLL();
     int* data = (int*) malloc(sizeof(int));
@@ -12,4 +12,6 @@ int main(int, char**){
     llpb(LL, data);
 
     printf("%d\n",*(int*)(LL->tailPtr->detail));
+
+    return 0;
 }

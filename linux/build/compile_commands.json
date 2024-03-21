@@ -1,0 +1,13 @@
+[
+{
+  "directory": "/home/won/Logistics_robot/linux/build",
+  "command": "/usr/bin/gcc-8  -I../cell -I../stack  -g   -o CMakeFiles/AstarForStm.dir/main.c.o   -c /home/won/Logistics_robot/linux/main.c",
+  "file": "/home/won/Logistics_robot/linux/main.c"
+},
+
+{
+  "directory": "/home/won/Logistics_robot/linux/build",
+  "command": "/usr/bin/gcc-8  -I../cell -I../stack  -g   -o CMakeFiles/AstarForStm.dir/cell/linkedList.c.o   -c /home/won/Logistics_robot/linux/cell/linkedList.c",
+  "file": "/home/won/Logistics_robot/linux/cell/linkedList.c"
+}
+]

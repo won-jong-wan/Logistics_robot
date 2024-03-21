@@ -1,0 +1,19 @@
+# ninja log v5
+0	16	1711004762916132024	CMakeFiles/AstarForStm.dir/linkedList.c.o	3e2cd32830a72b76
+0	16	1711004832900430745	CMakeFiles/AstarForStm.dir/main.c.o	b1ba83dac83d97be
+16	24	1711004832912430796	AstarForStm	2face61a6bd9084f
+1	20	1711004891300680021	CMakeFiles/AstarForStm.dir/main.c.o	b1ba83dac83d97be
+20	29	1711004891312680072	AstarForStm	2face61a6bd9084f
+0	16	1711004902308727007	CMakeFiles/AstarForStm.dir/main.c.o	b1ba83dac83d97be
+16	24	1711004902324727075	AstarForStm	2face61a6bd9084f
+0	16	1711004946776916815	CMakeFiles/AstarForStm.dir/main.c.o	b1ba83dac83d97be
+16	24	1711004946788916866	AstarForStm	2face61a6bd9084f
+0	10	1711004953616946011	CMakeFiles/AstarForStm.dir/main.c.o	b1ba83dac83d97be
+10	18	1711004953624946045	AstarForStm	2face61a6bd9084f
+0	14	1711007668441130049	CMakeFiles/AstarForStm.dir/cell/linkedList.c.o	ea33c0ca32479701
+0	21	1711008038042710054	CMakeFiles/AstarForStm.dir/cell/linkedList.c.o	3e133e6c8817bdc
+0	21	1711008038046710071	CMakeFiles/AstarForStm.dir/main.c.o	edfb3a87d8af6d11
+21	39	1711008038066710156	AstarForStm	31f0a79fa66e159d
+0	18	1711010729770702329	CMakeFiles/AstarForStm.dir/main.c.o	650c8da11b20a0c4
+0	19	1711010729770702329	CMakeFiles/AstarForStm.dir/cell/linkedList.c.o	e5f78edc25a204b1
+19	29	1711010729786702401	AstarForStm	31f0a79fa66e159d
