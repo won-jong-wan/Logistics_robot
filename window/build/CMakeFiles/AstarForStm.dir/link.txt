@@ -1,1 +1,3 @@
-/usr/bin/gcc -g -rdynamic CMakeFiles/AstarForStm.dir/main.c.o CMakeFiles/AstarForStm.dir/linkedList.c.o -o AstarForStm 
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\AstarForStm.dir/objects.a
+C:\MinGW\bin\ar.exe qc CMakeFiles\AstarForStm.dir/objects.a @CMakeFiles\AstarForStm.dir\objects1.rsp
+C:\MinGW\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\AstarForStm.dir/objects.a -Wl,--no-whole-archive -o AstarForStm.exe -Wl,--out-implib,libAstarForStm.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\AstarForStm.dir\linkLibs.rsp

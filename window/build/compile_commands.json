@@ -1,12 +1,14 @@
 [
 {
-  "directory": "/home/won/dev/AstarForStm/build",
-  "command": "/usr/bin/gcc   -g -o CMakeFiles/AstarForStm.dir/main.c.o -c /home/won/dev/AstarForStm/main.c",
-  "file": "/home/won/dev/AstarForStm/main.c"
+  "directory": "C:/Users/jonwo/Desktop/Logistics_robot/window/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe  @CMakeFiles/AstarForStm.dir/includes_C.rsp -g -o CMakeFiles\\AstarForStm.dir\\main.c.obj -c C:\\Users\\jonwo\\Desktop\\Logistics_robot\\window\\main.c",
+  "file": "C:/Users/jonwo/Desktop/Logistics_robot/window/main.c",
+  "output": "CMakeFiles/AstarForStm.dir/main.c.obj"
 },
 {
-  "directory": "/home/won/dev/AstarForStm/build",
-  "command": "/usr/bin/gcc   -g -o CMakeFiles/AstarForStm.dir/linkedList.c.o -c /home/won/dev/AstarForStm/linkedList.c",
-  "file": "/home/won/dev/AstarForStm/linkedList.c"
+  "directory": "C:/Users/jonwo/Desktop/Logistics_robot/window/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe  @CMakeFiles/AstarForStm.dir/includes_C.rsp -g -o CMakeFiles\\AstarForStm.dir\\cell\\linkedList.c.obj -c C:\\Users\\jonwo\\Desktop\\Logistics_robot\\window\\cell\\linkedList.c",
+  "file": "C:/Users/jonwo/Desktop/Logistics_robot/window/cell/linkedList.c",
+  "output": "CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj"
 }
 ]

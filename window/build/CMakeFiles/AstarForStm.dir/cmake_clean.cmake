@@ -1,10 +1,12 @@
 file(REMOVE_RECURSE
-  "AstarForStm"
+  "AstarForStm.exe"
+  "AstarForStm.exe.manifest"
   "AstarForStm.pdb"
-  "CMakeFiles/AstarForStm.dir/linkedList.c.o"
-  "CMakeFiles/AstarForStm.dir/linkedList.c.o.d"
-  "CMakeFiles/AstarForStm.dir/main.c.o"
-  "CMakeFiles/AstarForStm.dir/main.c.o.d"
+  "CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj"
+  "CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj.d"
+  "CMakeFiles/AstarForStm.dir/main.c.obj"
+  "CMakeFiles/AstarForStm.dir/main.c.obj.d"
+  "libAstarForStm.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.
