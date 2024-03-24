@@ -7,8 +7,20 @@
 },
 {
   "directory": "C:/Users/jonwo/Desktop/Logistics_robot/window/build",
-  "command": "C:\\MinGW\\bin\\gcc.exe  @CMakeFiles/AstarForStm.dir/includes_C.rsp -g -o CMakeFiles\\AstarForStm.dir\\cell\\linkedList.c.obj -c C:\\Users\\jonwo\\Desktop\\Logistics_robot\\window\\cell\\linkedList.c",
-  "file": "C:/Users/jonwo/Desktop/Logistics_robot/window/cell/linkedList.c",
-  "output": "CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj"
+  "command": "C:\\MinGW\\bin\\gcc.exe  @CMakeFiles/AstarForStm.dir/includes_C.rsp -g -o CMakeFiles\\AstarForStm.dir\\lpp\\linkedList.c.obj -c C:\\Users\\jonwo\\Desktop\\Logistics_robot\\window\\lpp\\linkedList.c",
+  "file": "C:/Users/jonwo/Desktop/Logistics_robot/window/lpp/linkedList.c",
+  "output": "CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj"
+},
+{
+  "directory": "C:/Users/jonwo/Desktop/Logistics_robot/window/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe  @CMakeFiles/AstarForStm.dir/includes_C.rsp -g -o CMakeFiles\\AstarForStm.dir\\staCell\\box.c.obj -c C:\\Users\\jonwo\\Desktop\\Logistics_robot\\window\\staCell\\box.c",
+  "file": "C:/Users/jonwo/Desktop/Logistics_robot/window/staCell/box.c",
+  "output": "CMakeFiles/AstarForStm.dir/staCell/box.c.obj"
+},
+{
+  "directory": "C:/Users/jonwo/Desktop/Logistics_robot/window/build",
+  "command": "C:\\MinGW\\bin\\gcc.exe  @CMakeFiles/AstarForStm.dir/includes_C.rsp -g -o CMakeFiles\\AstarForStm.dir\\staCell\\stack.c.obj -c C:\\Users\\jonwo\\Desktop\\Logistics_robot\\window\\staCell\\stack.c",
+  "file": "C:/Users/jonwo/Desktop/Logistics_robot/window/staCell/stack.c",
+  "output": "CMakeFiles/AstarForStm.dir/staCell/stack.c.obj"
 }
 ]

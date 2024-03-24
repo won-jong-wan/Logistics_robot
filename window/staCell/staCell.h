@@ -1,6 +1,6 @@
 #ifndef STACELL_H
 #define STACELL_H
 
-#include "cell.h"
+#include "stack.h"
 
 #endif

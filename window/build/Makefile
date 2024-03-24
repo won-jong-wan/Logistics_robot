@@ -522,29 +522,29 @@ AstarForStm/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/build
 .PHONY : AstarForStm/fast
 
-cell/linkedList.obj: cell/linkedList.c.obj
-.PHONY : cell/linkedList.obj
+lpp/linkedList.obj: lpp/linkedList.c.obj
+.PHONY : lpp/linkedList.obj
 
 # target to build an object file
-cell/linkedList.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj
-.PHONY : cell/linkedList.c.obj
+lpp/linkedList.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj
+.PHONY : lpp/linkedList.c.obj
 
-cell/linkedList.i: cell/linkedList.c.i
-.PHONY : cell/linkedList.i
+lpp/linkedList.i: lpp/linkedList.c.i
+.PHONY : lpp/linkedList.i
 
 # target to preprocess a source file
-cell/linkedList.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/cell/linkedList.c.i
-.PHONY : cell/linkedList.c.i
+lpp/linkedList.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/lpp/linkedList.c.i
+.PHONY : lpp/linkedList.c.i
 
-cell/linkedList.s: cell/linkedList.c.s
-.PHONY : cell/linkedList.s
+lpp/linkedList.s: lpp/linkedList.c.s
+.PHONY : lpp/linkedList.s
 
 # target to generate assembly for a file
-cell/linkedList.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/cell/linkedList.c.s
-.PHONY : cell/linkedList.c.s
+lpp/linkedList.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/lpp/linkedList.c.s
+.PHONY : lpp/linkedList.c.s
 
 main.obj: main.c.obj
 .PHONY : main.obj
@@ -569,6 +569,54 @@ main.s: main.c.s
 main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/main.c.s
 .PHONY : main.c.s
+
+staCell/box.obj: staCell/box.c.obj
+.PHONY : staCell/box.obj
+
+# target to build an object file
+staCell/box.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/staCell/box.c.obj
+.PHONY : staCell/box.c.obj
+
+staCell/box.i: staCell/box.c.i
+.PHONY : staCell/box.i
+
+# target to preprocess a source file
+staCell/box.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/staCell/box.c.i
+.PHONY : staCell/box.c.i
+
+staCell/box.s: staCell/box.c.s
+.PHONY : staCell/box.s
+
+# target to generate assembly for a file
+staCell/box.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/staCell/box.c.s
+.PHONY : staCell/box.c.s
+
+staCell/stack.obj: staCell/stack.c.obj
+.PHONY : staCell/stack.obj
+
+# target to build an object file
+staCell/stack.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/staCell/stack.c.obj
+.PHONY : staCell/stack.c.obj
+
+staCell/stack.i: staCell/stack.c.i
+.PHONY : staCell/stack.i
+
+# target to preprocess a source file
+staCell/stack.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/staCell/stack.c.i
+.PHONY : staCell/stack.c.i
+
+staCell/stack.s: staCell/stack.c.s
+.PHONY : staCell/stack.s
+
+# target to generate assembly for a file
+staCell/stack.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/staCell/stack.c.s
+.PHONY : staCell/stack.c.s
 
 # Help Target
 help:
@@ -610,12 +658,18 @@ help:
 	@echo ... NightlyTest
 	@echo ... NightlyUpdate
 	@echo ... AstarForStm
-	@echo ... cell/linkedList.obj
-	@echo ... cell/linkedList.i
-	@echo ... cell/linkedList.s
+	@echo ... lpp/linkedList.obj
+	@echo ... lpp/linkedList.i
+	@echo ... lpp/linkedList.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... staCell/box.obj
+	@echo ... staCell/box.i
+	@echo ... staCell/box.s
+	@echo ... staCell/stack.obj
+	@echo ... staCell/stack.i
+	@echo ... staCell/stack.s
 .PHONY : help
 
 

@@ -83,36 +83,70 @@ CMakeFiles/AstarForStm.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/AstarForStm.dir/main.c.s"
 	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\jonwo\Desktop\Logistics_robot\window\main.c -o CMakeFiles\AstarForStm.dir\main.c.s
 
-CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj: CMakeFiles/AstarForStm.dir/flags.make
-CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj: CMakeFiles/AstarForStm.dir/includes_C.rsp
-CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj: C:/Users/jonwo/Desktop/Logistics_robot/window/cell/linkedList.c
-CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj: CMakeFiles/AstarForStm.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj -MF CMakeFiles\AstarForStm.dir\cell\linkedList.c.obj.d -o CMakeFiles\AstarForStm.dir\cell\linkedList.c.obj -c C:\Users\jonwo\Desktop\Logistics_robot\window\cell\linkedList.c
+CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj: CMakeFiles/AstarForStm.dir/flags.make
+CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj: CMakeFiles/AstarForStm.dir/includes_C.rsp
+CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj: C:/Users/jonwo/Desktop/Logistics_robot/window/lpp/linkedList.c
+CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj: CMakeFiles/AstarForStm.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj -MF CMakeFiles\AstarForStm.dir\lpp\linkedList.c.obj.d -o CMakeFiles\AstarForStm.dir\lpp\linkedList.c.obj -c C:\Users\jonwo\Desktop\Logistics_robot\window\lpp\linkedList.c
 
-CMakeFiles/AstarForStm.dir/cell/linkedList.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/AstarForStm.dir/cell/linkedList.c.i"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\jonwo\Desktop\Logistics_robot\window\cell\linkedList.c > CMakeFiles\AstarForStm.dir\cell\linkedList.c.i
+CMakeFiles/AstarForStm.dir/lpp/linkedList.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/AstarForStm.dir/lpp/linkedList.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\jonwo\Desktop\Logistics_robot\window\lpp\linkedList.c > CMakeFiles\AstarForStm.dir\lpp\linkedList.c.i
 
-CMakeFiles/AstarForStm.dir/cell/linkedList.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/AstarForStm.dir/cell/linkedList.c.s"
-	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\jonwo\Desktop\Logistics_robot\window\cell\linkedList.c -o CMakeFiles\AstarForStm.dir\cell\linkedList.c.s
+CMakeFiles/AstarForStm.dir/lpp/linkedList.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/AstarForStm.dir/lpp/linkedList.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\jonwo\Desktop\Logistics_robot\window\lpp\linkedList.c -o CMakeFiles\AstarForStm.dir\lpp\linkedList.c.s
+
+CMakeFiles/AstarForStm.dir/staCell/box.c.obj: CMakeFiles/AstarForStm.dir/flags.make
+CMakeFiles/AstarForStm.dir/staCell/box.c.obj: CMakeFiles/AstarForStm.dir/includes_C.rsp
+CMakeFiles/AstarForStm.dir/staCell/box.c.obj: C:/Users/jonwo/Desktop/Logistics_robot/window/staCell/box.c
+CMakeFiles/AstarForStm.dir/staCell/box.c.obj: CMakeFiles/AstarForStm.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/AstarForStm.dir/staCell/box.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/AstarForStm.dir/staCell/box.c.obj -MF CMakeFiles\AstarForStm.dir\staCell\box.c.obj.d -o CMakeFiles\AstarForStm.dir\staCell\box.c.obj -c C:\Users\jonwo\Desktop\Logistics_robot\window\staCell\box.c
+
+CMakeFiles/AstarForStm.dir/staCell/box.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/AstarForStm.dir/staCell/box.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\jonwo\Desktop\Logistics_robot\window\staCell\box.c > CMakeFiles\AstarForStm.dir\staCell\box.c.i
+
+CMakeFiles/AstarForStm.dir/staCell/box.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/AstarForStm.dir/staCell/box.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\jonwo\Desktop\Logistics_robot\window\staCell\box.c -o CMakeFiles\AstarForStm.dir\staCell\box.c.s
+
+CMakeFiles/AstarForStm.dir/staCell/stack.c.obj: CMakeFiles/AstarForStm.dir/flags.make
+CMakeFiles/AstarForStm.dir/staCell/stack.c.obj: CMakeFiles/AstarForStm.dir/includes_C.rsp
+CMakeFiles/AstarForStm.dir/staCell/stack.c.obj: C:/Users/jonwo/Desktop/Logistics_robot/window/staCell/stack.c
+CMakeFiles/AstarForStm.dir/staCell/stack.c.obj: CMakeFiles/AstarForStm.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/AstarForStm.dir/staCell/stack.c.obj"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/AstarForStm.dir/staCell/stack.c.obj -MF CMakeFiles\AstarForStm.dir\staCell\stack.c.obj.d -o CMakeFiles\AstarForStm.dir\staCell\stack.c.obj -c C:\Users\jonwo\Desktop\Logistics_robot\window\staCell\stack.c
+
+CMakeFiles/AstarForStm.dir/staCell/stack.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/AstarForStm.dir/staCell/stack.c.i"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Users\jonwo\Desktop\Logistics_robot\window\staCell\stack.c > CMakeFiles\AstarForStm.dir\staCell\stack.c.i
+
+CMakeFiles/AstarForStm.dir/staCell/stack.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/AstarForStm.dir/staCell/stack.c.s"
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Users\jonwo\Desktop\Logistics_robot\window\staCell\stack.c -o CMakeFiles\AstarForStm.dir\staCell\stack.c.s
 
 # Object files for target AstarForStm
 AstarForStm_OBJECTS = \
 "CMakeFiles/AstarForStm.dir/main.c.obj" \
-"CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj"
+"CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj" \
+"CMakeFiles/AstarForStm.dir/staCell/box.c.obj" \
+"CMakeFiles/AstarForStm.dir/staCell/stack.c.obj"
 
 # External object files for target AstarForStm
 AstarForStm_EXTERNAL_OBJECTS =
 
 AstarForStm.exe: CMakeFiles/AstarForStm.dir/main.c.obj
-AstarForStm.exe: CMakeFiles/AstarForStm.dir/cell/linkedList.c.obj
+AstarForStm.exe: CMakeFiles/AstarForStm.dir/lpp/linkedList.c.obj
+AstarForStm.exe: CMakeFiles/AstarForStm.dir/staCell/box.c.obj
+AstarForStm.exe: CMakeFiles/AstarForStm.dir/staCell/stack.c.obj
 AstarForStm.exe: CMakeFiles/AstarForStm.dir/build.make
 AstarForStm.exe: CMakeFiles/AstarForStm.dir/linkLibs.rsp
 AstarForStm.exe: CMakeFiles/AstarForStm.dir/objects1.rsp
 AstarForStm.exe: CMakeFiles/AstarForStm.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable AstarForStm.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable AstarForStm.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\AstarForStm.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

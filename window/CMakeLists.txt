@@ -5,12 +5,13 @@ include(CTest)
 enable_testing()
 
 set(PROJECT_NAME AstarForStm)
-set(CELL cell/linkedList.c )
+set(SRC lpp/linkedList.c staCell/box.c staCell/stack.c)
 
-include_directories(cell)
-include_directories(stack)
+include_directories(lpp)
+include_directories(dpp)
+include_directories(staCell)
 
-add_executable(${PROJECT_NAME} main.c ${CELL})
+add_executable(${PROJECT_NAME} main.c ${SRC})
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

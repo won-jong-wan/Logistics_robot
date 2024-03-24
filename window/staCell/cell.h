@@ -1,8 +1,6 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include "linkedList.h"
-
 typedef enum _CellT{
     USABLE,
     BLOCKED,
@@ -10,14 +8,18 @@ typedef enum _CellT{
 }CellT;
 
 typedef struct _Cell{
-    unsigned int x;
-    unsigned int y;
-    LinkedList* node;
+    int x;
+    int y;
     CellT state;        
 }Cell;
 
 typedef struct _Grid{
-    Cell grid[4][3];
+    Cell** grid;
 }Grid;
+
+Cell ceinit(int x, int y, CellT state);
+Grid* grinit(int row, int column, CellT state);
+
+Cell ceread(Grid* gr);
 
 #endif 

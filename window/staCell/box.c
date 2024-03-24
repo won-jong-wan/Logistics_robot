@@ -1,6 +1,8 @@
 #include "box.h"
 
-Box *boxInit(int priority, BoxT load, BoxC category)
+int idSeed =0;
+
+Box* boxinit(int priority, BoxS load, void* data)
 {
   Box* box = (Box*)malloc(sizeof(Box));
 
@@ -8,11 +10,11 @@ Box *boxInit(int priority, BoxT load, BoxC category)
   box->id = idSeed;
   box->priority = priority;
   box->load = load;
-  box->category = category;
+  box->data = data;
   return box;
 }
 
-bool boxComp(Box *box0, Box *box1)
+bool boxcomp(Box *box0, Box *box1)
 {
   if(box0->load !=box1->id){
     return false;
@@ -22,7 +24,10 @@ bool boxComp(Box *box0, Box *box1)
   }
 }
 
-void delBox(Box *boxPtr)
+void boxdel(Box *boxPtr)
 {
+  free(boxPtr->data);
+  printf("Void ptr free\n");
   free(boxPtr);
+  printf("Box ptr free\n");
 }

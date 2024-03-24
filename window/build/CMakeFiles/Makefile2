@@ -836,12 +836,12 @@ CMakeFiles/ContinuousSubmit.dir/clean:
 CMakeFiles/AstarForStm.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\AstarForStm.dir\build.make CMakeFiles/AstarForStm.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles --progress-num=1,2,3 "Built target AstarForStm"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles --progress-num=1,2,3,4,5 "Built target AstarForStm"
 .PHONY : CMakeFiles/AstarForStm.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/AstarForStm.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/AstarForStm.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\jonwo\Desktop\Logistics_robot\window\build\CMakeFiles 0
 .PHONY : CMakeFiles/AstarForStm.dir/rule

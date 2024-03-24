@@ -2,6 +2,8 @@
 #define ROBOT_H
 
 #include "staCell.h"
+#include "lpp.h"
+#include "dpp.h"
 
 typedef enum _RobMovM{
     STOP,
@@ -28,7 +30,6 @@ typedef struct _Robot{
     RobMovM rMovM;
     RobGraM rGrabM;
     GrabLev rGrabL;
-    Cell rPostion;
 }Robot;
 
 #endif
