@@ -8,5 +8,6 @@ CMakeFiles/AstarForStm.dir/main.c.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\stdarg.h \
  c:\mingw\include\stdlib.h \
  C:\Users\jonwo\Desktop\Logistics_robot\window\robot.h \
+ C:\Users\jonwo\Desktop\Logistics_robot\window\staCell.h \
  C:/Users/jonwo/Desktop/Logistics_robot/window/cell/cell.h \
  C:/Users/jonwo/Desktop/Logistics_robot/window/cell/linkedList.h

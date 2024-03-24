@@ -1,7 +1,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
-#include "cell.h"
+#include "staCell.h"
 
 typedef enum _RobMovM{
     STOP,
