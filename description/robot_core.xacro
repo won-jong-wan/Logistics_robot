@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    
+
+    <xacro:include filename="inertial_macros.xacro"/>
+    <xacro:property name="chassis_height" value="0.3"/>
+
     <material name="white">
         <color rgba="1 1 1 1" />
     </material>
@@ -21,7 +24,7 @@
         <color rgba="1 0 0 1"/>
     </material>
 
-
+    <!-- chassis-->
 
     <link name="base_link">
         <origin xyz="0.0 0.0 0.30"/>
@@ -41,19 +44,37 @@
             </geometry>
             <material name="white"/>
         </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0025"/>
+            <geometry>
+            <box size="0.3 0.3 0.005"/>
+            </geometry>
+        </collision>
     </link>
-    
+
+    <joint name="footprint_joint" type="fixed">
+        <parent link="low_chassis"/>
+        <child link="footprint"/>
+        <origin xyz="0.0 0.0 -0.255"/>
+    </joint>
+
+    <link name="footprint">
+        <origin xyz="0.0 0.0 0.0"/>
+    </link>
+
+     <!-- yMotor and ywheels (up down moving)-->
+
     <joint name="upper_wheel_plate_joint1" type="prismatic">
         <parent link="low_chassis"/>
         <child link="wheel_plate1"/>
-        <origin xyz="-0.15 0.0 -0.1"/>
+        <origin xyz="-0.15 0.0 ${-chassis_height/2+0.005}"/>
         <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-0.03" upper="0.03" effort="60" velocity="0.1"/>
     </joint>
     <joint name="upper_wheel_plate_joint2" type="prismatic">
         <parent link="low_chassis"/>
         <child link="wheel_plate2"/>
-        <origin xyz="0.15 0.0 -0.1"/>
+        <origin xyz="0.15 0.0 ${-chassis_height/2+0.005}"/>
         <axis xyz="0.0 0.0 1.0"/>
         <limit lower="-0.03" upper="0.03" effort="30" velocity="0.1"/>
     </joint>
@@ -62,30 +83,172 @@
         <visual>
             <origin xyz="-0.0025 0.0 0.0"/>
             <geometry>
-                <box size="0.005 0.3 0.2"/>
+                <box size="0.005 0.3 ${chassis_height}"/>
             </geometry>
             <material name="orange"/>
         </visual>
+        <collision>
+            <origin xyz="-0.0025 0.0 0.0"/>
+            <geometry>
+                <box size="0.005 0.3 ${chassis_height}"/>
+            </geometry>
+        </collision>
     </link>
 
     <link name="wheel_plate2">
         <visual>
             <origin xyz="0.0025 0.0 0.0"/>
             <geometry>
-                <box size="0.005 0.3 0.2"/>
+                <box size="0.005 0.3 ${chassis_height}"/>
             </geometry>
             <material name="orange"/>
         </visual>
+        <collision>
+            <origin xyz="0.0025 0.0 0.0"/>
+            <geometry>
+                <box size="0.005 0.3 ${chassis_height}"/>
+            </geometry>
+        </collision>
     </link>
 
-    <joint name="footprint_joint" type="fixed">
-        <parent link="low_chassis"/>
-        <child link="footprint"/>
-        <origin xyz="0.0 0.0 -0.3"/>
+    <joint name="yMotor1_joint" type="continuous">
+        <parent link="wheel_plate1"/>
+        <child link="yMotor1"/>
+        <origin xyz="-0.005 0.075 ${-chassis_height/2}" rpy="0.0 ${pi/2} 0.0"/>
+        <axis xyz="0.0 0.0 1.0"/>
     </joint>
 
-    <link name="footprint">
-        <origin xyz="0.0 0.0 0.0"/>
+    <joint name="yMotor2_joint" type="continuous">
+        <parent link="wheel_plate2"/>
+        <child link="yMotor2"/>
+        <origin xyz="0.005 0.075 ${-chassis_height/2}" rpy="0.0 ${pi/2} 0.0"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+
+    <joint name="yWheel1_joint" type="fixed">
+        <parent link="wheel_plate1"/>
+        <child link="yWheel1"/>
+        <origin xyz="-0.005 -0.075 ${-chassis_height/2}" rpy="0.0 ${pi/2} 0.0"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+
+    <joint name="yWheel2_joint" type="fixed">
+        <parent link="wheel_plate2"/>
+        <child link="yWheel2"/>
+        <origin xyz="0.005 -0.075 ${-chassis_height/2}" rpy="0.0 ${pi/2} 0.0"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+
+
+    <link name="yMotor1">
+        <visual>
+        <origin xyz="0.0 0.0 -0.005"/>
+        <geometry>
+            <cylinder radius="0.05" length="0.015"/>
+        </geometry>
+        <material name="red"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 -0.005"/>
+        <geometry>
+            <cylinder radius="0.05" length="0.015"/>
+        </geometry>
+        </collision>
+    </link>
+
+    <link name="yMotor2">
+        <visual>
+        <origin xyz="0.0 0.0 0.005"/>
+        <geometry>
+            <cylinder radius="0.05" length="0.015"/>
+        </geometry>
+        <material name="red"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.005"/>
+        <geometry>
+            <cylinder radius="0.05" length="0.015"/>
+        </geometry>
+        </collision>
+    </link>
+
+    <link name="yWheel1">
+        <visual>
+        <origin xyz="0.0 0.0 -0.005"/>
+        <geometry>
+            <cylinder radius="0.05" length="0.015"/>
+        </geometry>
+        <material name="white"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 -0.005"/>
+        <geometry>
+            <cylinder radius="0.05" length="0.015"/>
+        </geometry>
+        </collision>
+    </link>
+
+    <link name="yWheel2">
+        <visual>
+        <origin xyz="0.0 0.0 0.005"/>
+        <geometry>
+            <cylinder radius="0.05" length="0.015"/>
+        </geometry>
+        <material name="white"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.005"/>
+        <geometry>
+            <cylinder radius="0.05" length="0.015"/>
+        </geometry>
+        </collision>
+    </link>
+
+    <!-- xMotor and xwheels -->
+
+    <joint name="fixed_wheel_plate_joint1" type="fixed">
+        <parent link="low_chassis"/>
+        <child link="fixed_wheel_plate1"/>
+        <origin xyz="0.0 -0.15 ${-chassis_height/2+0.005}"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+    <joint name="fixed_wheel_plate_joint2" type="fixed">
+        <parent link="low_chassis"/>
+        <child link="fixed_wheel_plate2"/>
+        <origin xyz="0.0 0.15 ${-chassis_height/2+0.005}"/>
+        <axis xyz="0.0 0.0 1.0"/>
+    </joint>
+
+    <link name="fixed_wheel_plate1">
+        <visual>
+            <origin xyz="0.0 -0.0025 0.0"/>
+            <geometry>
+                <box size="0.3 0.005 ${chassis_height}"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 -0.0025 0.0"/>
+            <geometry>
+                <box size="0.3 0.005 ${chassis_height}"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="fixed_wheel_plate2">
+        <visual>
+            <origin xyz="0.0 0.0025 0.0"/>
+            <geometry>
+                <box size="0.3 0.005 ${chassis_height}"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0025 0.0"/>
+            <geometry>
+                <box size="0.3 0.005 ${chassis_height}"/>
+            </geometry>
+        </collision>
     </link>
 
 </robot>
