@@ -1,0 +1,5 @@
+../Core/Src/com.c:47:1:__io_putchar	16	static
+../Core/Src/com.c:53:5:_write	24	static
+../Core/Src/com.c:58:6:SerialSendChar_PC	16	static
+../Core/Src/com.c:67:6:SerialSendChar_WIFI	16	static
+../Core/Src/com.c:74:6:HAL_UART_RxCpltCallback	16	static
