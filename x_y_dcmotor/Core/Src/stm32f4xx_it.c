@@ -56,6 +56,12 @@ float RPM_X;
 float RPS_X;
 float Omega_X;
 
+uint32_t ENCODER_NEW_Y, ENCODER_OLD_Y;
+float RPM_Y;
+float RPS_Y;
+float Omega_Y;
+
+
 //////////////////////전류센서
 
 float sensitivity = 0.255;
@@ -120,7 +126,6 @@ extern uint16_t ball_screw_pulse_cycle;
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc3;
 extern ADC_HandleTypeDef hadc3;
-extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim6;
 extern TIM_HandleTypeDef htim8;
 extern TIM_HandleTypeDef htim11;
@@ -346,7 +351,6 @@ void TIM1_TRG_COM_TIM11_IRQHandler(void)
   /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 0 */
 
   /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim1);
   HAL_TIM_IRQHandler(&htim11);
   /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 1 */
 	step_pulse_count_tim11++;
@@ -431,18 +435,16 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
 	// GPIOB->ODR ^= 1 << 7;
 	tim14_flag++;
 
-//motor1
+//motor1 X
 	ENCODER_OLD_X = ENCODER_NEW_X;
 	ENCODER_NEW_X = TIM2->CNT;
 
-	RPM_X = (abs(ENCODER_NEW_X - ENCODER_OLD_X) * 60) / 0.01 / 34 / 512; // ?��코더 ?��?��: 1 turn?�� 3 pulse 출력
+	RPM_X = (abs(ENCODER_NEW_X - ENCODER_OLD_X) * 60) / 0.01 / 68 / 512;
 	RPS_X = RPM_X / 60;
 	Omega_X = RPS_X * 2 * M_PI;
 
-	//	printf("RPS = %d \r\n",RPS);
-	// 	 printf("RPM = %d \r\n",RPM);
 
-	if (( GPIOE->ODR & 1 << 0) == 0)	// if  back?
+	if (( GPIOE->ODR & 1 << 0) == 0)	// if  앞으로
 			{
 		RPM_X = RPM_X;
 		RPS_X = RPS_X;
@@ -456,6 +458,35 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
 
 		current_A = -current_A;
 	}
+
+//motor2 Y
+
+	ENCODER_OLD_Y = ENCODER_NEW_Y;
+		ENCODER_NEW_Y = TIM4->CNT;
+
+		RPM_Y= (abs(ENCODER_NEW_Y - ENCODER_OLD_Y) * 60) / 0.01 / 17 / 512;
+		RPS_Y = RPM_Y / 60;
+		Omega_Y = RPS_Y * 2 * M_PI;
+
+
+		if (( GPIOB->ODR & 1 <<10) == 0)	// if  PB10==0  : go
+				{
+			RPM_Y = RPM_Y;
+			RPS_Y = RPS_Y;
+			Omega_Y = Omega_Y;
+
+			//current_A = current_A;
+		} else {
+			RPM_Y = -RPM_Y;
+			RPS_Y = -RPS_Y;
+			Omega_Y = -Omega_Y;
+
+			//current_A = -current_A;
+		}
+
+
+
+
 
   /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 1 */
 }

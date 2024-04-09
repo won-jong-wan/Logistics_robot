@@ -5,17 +5,58 @@
 //extern uint32_t encoder_count;
 
 
-float err_sum_s_Y;
-float err_sum_Y;
+
+
+
+
+
+//////Y
 float input_position_Y;
 
+float err_Y;
 
 
+float p_kp_Y = 500;
+float p_ki_Y;
+float p_kd_Y = 25;
+
+float s_kp_Y = 1;
+float s_ki_Y = 0;
+float s_kd_Y;
+
+//float c_kp = 1;
+//float c_ki = 0;
+//float c_kd;
+
+float P_KP_Y;
+float P_KI_Y;
+double P_KD_Y;
+double p_PID_Y;
+double err_d_Y;
+float previous_err_Y;
 
 
+double err_d_s_Y;
+float previous_err_s_Y;
+
+float err_s_Y;
+float err_sum_s_Y;
+float err_sum_Y;
+float S_KP_Y;
+float S_KI_Y;
+double S_KD_Y;
+double s_PID_Y;
 
 
-///////////
+extern float RPM_Y;
+
+float speed_sensor_Y;
+float speed_input_Y;
+
+
+float errorgap_p_Y;
+float errorgap_s_Y;
+//////////////////////////////////////// X
 float input_speed_X;
 float input_position_X;
 
@@ -24,11 +65,11 @@ float input_current;
 float err_X;
 
 
-float p_kp_X = 1000;
+float p_kp_X = 300;
 float p_ki_X;
-float p_kd_X = 10;
+float p_kd_X = 15;
 
-float s_kp_X = 1.2;
+float s_kp_X = 1;
 float s_ki_X = 0;
 float s_kd_X;
 
@@ -84,6 +125,9 @@ extern float current_A_floor;
 float errorgap_p_X;
 float errorgap_s_X;
 float errorgap_c;
+
+
+//float errorgap_c;
 
 
 
@@ -447,7 +491,7 @@ void position_pid_x(void) {
 			//		realError = target - current;	// 실시간 에러는 단순히 목표값 - 현재값을 의미합니다.
 			//	    accError += realError;
 
-			speed_sensor_X = (RPM_X / 60 * 34 * 512);
+			speed_sensor_X = (RPM_X *34 * 512)/60;
 			speed_input_X = p_PID_X;
 			errorgap_s_X = speed_input_X - speed_sensor_X - err_s_X;
 			err_s_X = speed_input_X - speed_sensor_X;
@@ -613,7 +657,7 @@ void position_pid_x(void) {
 
 
 
-#define SOURCE2 11
+#define SOURCE2 10
 void position_pid_y(void) {   //일단은 rpm은 tim5로 해야되지만 기존의 tim2로 사용함 ,,
 
 
@@ -634,28 +678,28 @@ void position_pid_y(void) {   //일단은 rpm은 tim5로 해야되지만 기존�
 	//		realError = target - current;	// 실시간 에러는 단순히 목표값 - 현재값을 의미합니다.
 	//	    accError += realError;
 
-		errorgap_p_X = input_position_X - TIM5->CNT - err_X;
-		err_X = input_position_X - TIM5->CNT;
-		err_sum_X += err_X * 0.001;
+		errorgap_p_Y = input_position_Y - TIM4->CNT - err_Y;
+		err_Y = input_position_Y - TIM4->CNT;
+		err_sum_Y += err_Y * 0.001;
 
-		if (p_PID_X == 0) {
-			err_sum_X = 0;
+		if (p_PID_Y == 0) {
+			err_sum_Y = 0;
 		}
 
-		P_KP_X = err_X * p_kp_X;
-		P_KI_X = err_sum_X * p_ki_X;
+		P_KP_Y = err_Y * p_kp_Y;
+		P_KI_Y = err_sum_Y * p_ki_Y;
 
 		//	err_d_X = (err_X - previous_err_X) / 0.0001;   //1ms
 		//	previous_err_X = err_X;
 
-		P_KD_X = p_kd_X * errorgap_p_X / 0.001;
+		P_KD_Y = p_kd_Y * errorgap_p_Y / 0.001;
 
-		p_PID_X = P_KP_X + P_KI_X + P_KD_X;
+		p_PID_Y = P_KP_Y + P_KI_Y + P_KD_Y;
 
-		if (p_PID_X >= 12000) {
-			p_PID_X = 12000;
-		} else if (p_PID_X <= -12000) {
-			p_PID_X = -12000;
+		if (p_PID_Y >= 12000) {
+			p_PID_Y = 12000;
+		} else if (p_PID_Y <= -12000) {
+			p_PID_Y = -12000;
 		}
 	/////////////////////////////////////속도
 
@@ -663,41 +707,41 @@ void position_pid_y(void) {   //일단은 rpm은 tim5로 해야되지만 기존�
 		//		realError = target - current;	// 실시간 에러는 단순히 목표값 - 현재값을 의미합니다.
 		//	    accError += realError;
 
-		speed_sensor_X = (RPM_X / 60 * 34 * 512);
-		speed_input_X = p_PID_X;
-		errorgap_s_X = speed_input_X - speed_sensor_X - err_s_X;
-		err_s_X = speed_input_X - speed_sensor_X;
-		err_sum_s_X += err_s_X * 0.001;
+		speed_sensor_Y = (RPM_Y * 3.4* 512)/60;
+		speed_input_Y = p_PID_Y;
+		errorgap_s_Y = speed_input_Y - speed_sensor_Y - err_s_Y;
+		err_s_Y = speed_input_Y - speed_sensor_Y;
+		err_sum_s_Y += err_s_Y * 0.001;
 
-		if (s_PID_X == 0) {
-			err_sum_s_X = 0;
+		if (s_PID_Y == 0) {
+			err_sum_s_Y = 0;
 		}
-		S_KP_X = err_s_X * s_kp_X;
-		S_KI_X = err_sum_s_X * s_ki_X;
+		S_KP_Y = err_s_Y * s_kp_Y;
+		S_KI_Y = err_sum_s_Y * s_ki_Y;
 
 		//	err_d = (err - previous_err) / 0.0001;   //1ms
 		//	previous_err = err;
 
-		S_KD_X = s_kd_X * errorgap_s_X / 0.001;
+		S_KD_Y = s_kd_Y * errorgap_s_Y / 0.001;
 
-		s_PID_X = S_KP_X + S_KI_X + S_KD_X;
+		s_PID_Y = S_KP_Y + S_KI_Y + S_KD_Y;
 
-		if (s_PID_X >= 6000) {
-			s_PID_X = 6000;
-		} else if (s_PID_X <= -6000) {
-			s_PID_X = -6000;
+		if (s_PID_Y >= 6000) {
+			s_PID_Y = 6000;
+		} else if (s_PID_Y <= -6000) {
+			s_PID_Y = -6000;
 		}
 
-		if (s_PID_X > 0) {
-			GPIOE->ODR &= ~1 << 0; // go
-			TIM3->CCR2 = s_PID_X;
-		} else if (s_PID_X < 0) {
-			GPIOE->ODR |= 1 << 0; // back
-			s_PID_X = -s_PID_X;
-			TIM3->CCR2 = s_PID_X;
+		if (s_PID_Y > 0) {
+			GPIOB->ODR &= ~1<<10;  // go
+			TIM3->CCR2 = s_PID_Y;
+		} else if (s_PID_Y < 0) {
+			GPIOB->ODR |= 1<<10;  // back
+			s_PID_Y = -s_PID_Y;
+			TIM3->CCR2 = s_PID_Y;
 		} else {
-			s_PID_X = 0;
-			TIM3->CCR2 = s_PID_X;
+			s_PID_Y = 0;
+			TIM3->CCR2 = s_PID_Y;
 		}
 
 #endif

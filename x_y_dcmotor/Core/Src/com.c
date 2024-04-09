@@ -3,7 +3,6 @@
 
 int position_start = 0;
 
-
 extern uint32_t encoder_count_x;
 extern uint8_t key_value;
 extern float input_position_X;
@@ -13,8 +12,6 @@ extern float err_sum_s_X;
 extern float err_sum_X;
 extern float err_sum_s_Y;
 extern float err_sum_Y;
-
-
 
 extern uint8_t data;
 int8_t RX_flag = 0;
@@ -29,8 +26,6 @@ extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim13;
 extern TIM_HandleTypeDef htim11;
 
-
-
 extern uint32_t step_pulse_count_tim13;
 extern uint16_t step_pulse_count_tim11;
 
@@ -41,8 +36,6 @@ uint8_t rev1_flag;
 extern uint16_t step_count;
 int step_enable = 0;
 uint16_t step_start = 0;
-
-
 
 PUTCHAR_PROTOTYPE  //테라텀
 {
@@ -107,35 +100,63 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 			break;
 
 		case '3':
-			TIM3->CCR1 = 50;
+			TIM3->CCR1 = 700;
 			//	TIM3->CCR2 = 50;
 
 			break;
 
 		case '4':
-			TIM3->CCR1 = 100;
+			TIM3->CCR1 = 1500;
 			//	TIM3->CCR2 = 100;
 
 			break;
 
 		case '5':
-			TIM3->CCR1 = 500;
+			TIM3->CCR1 = 5000;
 			//	TIM3->CCR2 = 500;
 
 			break;
 
-		case '6':
-			TIM3->CCR1 = 800;
-			//	TIM3->CCR2 = 800;
+
+////////////////y축 이동
+
+		case 'd':
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, 1);  //방향 back
+
+			GPIOB->ODR |= 1 << 0;  //LD1
+
 			break;
 
-		case '7':
-			TIM3->CCR1 = 1000;
-			//  		TIM3->CCR2 = 1000;
+		case 'f':
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10, 0);  //방향 go
+
+			GPIOB->ODR &= ~1 << 0;  //LD1
 
 			break;
 
+		case 'a':
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11, 1);  //stop
 
+			break;
+
+		case 's':
+			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_11, 0);  //start
+
+			break;
+
+		case 'e':
+			TIM3->CCR2 = 700;
+
+			break;
+
+		case 'r':
+			TIM3->CCR2 = 1500;
+
+			break;
+		case 't':
+			TIM3->CCR2 = 5000;
+
+			break;
 ///////////////////////////////////////////////////////////////////////////////////	바퀴 PID
 		case 'u':
 			if (position_start == 0) {
@@ -148,47 +169,45 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
 		case 'i':  //i, o, p : PID 동작 버튼
 			TIM2->CNT = 1000000;
-			input_position_X = 1000000 + 17000;
+			input_position_X = 1000000 + 34000;
 			err_sum_X = 0;
 			err_sum_s_X = 0;
 			break;
 
 		case 'o':
 			TIM2->CNT = 1000000;
-			input_position_X = 1000000 + 17000 * 2;
+			input_position_X = 1000000 + 34000 * 2;
 			err_sum_X = 0;
 			err_sum_s_X = 0;
 			break;
 
 		case 'p':
 			TIM2->CNT = 1000000;
-			input_position_X = 1000000 - 17000;
+			input_position_X = 1000000 - 34000;
 			err_sum_X = 0;
 			err_sum_s_X = 0;
 			break;
 ////////////y축
 		case '8':  //8, 9, 0 : PID y축 동작 버튼
-				TIM5->CNT = 1000000;
-				input_position_Y = 1000000 + 17000;
-				err_sum_Y = 0;
-				err_sum_s_Y = 0;
-				break;
+			TIM4->CNT = 30000;
+			input_position_Y = 30000 + 8500;
+			err_sum_Y = 0;
+			err_sum_s_Y = 0;
+			break;
 
-			case '9':
-				TIM5->CNT = 1000000;
-				input_position_Y = 1000000 + 17000 * 2;
-				err_sum_Y = 0;
-				err_sum_s_Y = 0;
-				break;
+		case '9':
+			TIM4->CNT = 30000;
+			input_position_Y = 30000 + 8500 * 2;
+			err_sum_Y = 0;
+			err_sum_s_Y = 0;
+			break;
 
-			case '0':
-				TIM5->CNT = 1000000;
-				input_position_Y = 1000000 - 17000;
-				err_sum_Y = 0;
-				err_sum_s_Y = 0;
-				break;
-
-
+		case '0':
+			TIM4->CNT = 30000;
+			input_position_Y = 30000 - 8500;
+			err_sum_Y = 0;
+			err_sum_s_Y = 0;
+			break;
 
 ///////////////////////////////////////z축 스텝모터
 		case 'j':
@@ -206,7 +225,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 			step_pulse_count_tim11 = 0;  //펄스 기준값 =0
 			HAL_TIM_OC_Start_IT(&htim11, TIM_CHANNEL_1);
 
-
 			break;
 		case ';':    //ccw 1바퀴
 
@@ -214,7 +232,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
 			step_pulse_count_tim11 = 0;
 			HAL_TIM_OC_Start_IT(&htim11, TIM_CHANNEL_1);
-
 
 ///////////////////////////////////////샤프트 스텝모터
 			break;
@@ -230,7 +247,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 			break;
 
 		case '.': //cw 1바퀴
-
 
 			step_pulse_count_tim13 = 0;  //펄스 기준값 =0
 			HAL_GPIO_WritePin(GPIOF, GPIO_PIN_14, 0);  //방향

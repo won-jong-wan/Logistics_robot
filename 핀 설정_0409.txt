@@ -1,20 +1,26 @@
-엔코더 사용시 타이머 설정 TIM2 , TIM5
+엔코더 사용시 타이머 설정 TIM2 , TIM4
 PWM 타이머 : 
 PSC =84-1
 ARR=10000-1
 CCR=0~10000
 
-엔코더모드 타이머: PSC =10-1
 
-GPIOE->ODR |= 1<<0;  // go
-GPIOE->ODR &= ~1<<0;  // back
+x축
+GPIOE->ODR &= ~1<<0;  // go
+GPIOE->ODR |= 1<<0;  // back
+DC모터(x축) : 출발: PG0,  방향: PE0
 
-DC모터(x축) : 출발: PG0,  방향: PE0  
-TIM3 ch1 2: 바퀴모터 pwm1, 2  : PA6 , PC7
+Y축 
+GPIOB->ODR &= ~1<<10;  // go
+GPIOB->ODR |= 1<<10;  // back
+DC모터(Y축) : 출발: PB11,  방향: PB10
+
+TIM3 ch1 2: 바퀴모터 pwm1, 2  : PA6 , PB5
 84-1
 10000-1
-TIM2 ch1 2 :  엔코더 측정  PA15, PB3
-TIM5 ch1 2 : 엔코더 //나중
+TIM2 ch1 2 :  엔코더 측정  PA15, PB3   :한바퀴 약 34000
+TIM4 ch1 2 : 엔코더    PD12 PD13                       8500
+엔코더모드 타이머tim2: PSC =5-1,       tim4 PSC=20-1
 
 TIM6 PID 샘플링 주기 0.001s = 1ms  //더 빨리하면 모터 이상해짐
 84-1 = 1MHz (=1us)
