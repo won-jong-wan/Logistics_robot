@@ -1,0 +1,8 @@
+{
+    "ros.distro": "humble",
+    "files.associations": {
+        "*.xacro": "xml",
+        "stdio.h": "c",
+        "main.h": "c"
+    }
+}

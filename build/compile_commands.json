@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/won/dev/lpp/build",
+  "command": "/usr/bin/gcc   -g -o CMakeFiles/pp.dir/main.c.o -c /home/won/dev/lpp/main.c",
+  "file": "/home/won/dev/lpp/main.c"
+}
+]
