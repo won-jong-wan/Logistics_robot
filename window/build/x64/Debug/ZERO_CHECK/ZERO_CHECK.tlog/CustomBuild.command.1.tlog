@@ -1,0 +1,10 @@
+^C:\USERS\YUUUJ\LOGISTICS_ROBOT\WINDOW\BUILD\CMAKEFILES\242EF1F85373D087C058E8456F1A4186\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/yuuuj/Logistics_robot/window -BC:/Users/yuuuj/Logistics_robot/window/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/yuuuj/Logistics_robot/window/build/pp.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

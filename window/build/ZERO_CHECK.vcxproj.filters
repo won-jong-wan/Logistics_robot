@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\yuuuj\Logistics_robot\window\build\CMakeFiles\242ef1f85373d087c058e8456f1a4186\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B03058E6-FCD6-3046-8628-818D812F4E84}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,50 @@
+﻿  1>Checking Build System
+  CMake is re-running because C:/Users/yuuuj/Logistics_robot/window/build/CMakeFiles/generate.stamp is out-of-date.
+    the file 'C:/Users/yuuuj/Logistics_robot/window/build/CMakeFiles/3.29.2/CMakeCCompiler.cmake'
+    is newer than 'C:/Users/yuuuj/Logistics_robot/window/build/CMakeFiles/generate.stamp.depend'
+    result='0'
+  -- The C compiler identification is GNU 11.3.1
+  -- Detecting C compiler ABI info
+  -- Detecting C compiler ABI info - failed
+  -- Check for working C compiler: C:/ST/STM32CubeCLT/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe
+  -- Check for working C compiler: C:/ST/STM32CubeCLT/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe - broken
+  CMake Error at C:/Program Files/CMake/share/cmake-3.29/Modules/CMakeTestCCompiler.cmake:67 (message):
+    The C compiler
+  
+      "C:/ST/STM32CubeCLT/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe"
+  
+    is not able to compile a simple test program.
+  
+    It fails with the following output:
+  
+      Change Dir: 'C:/Users/yuuuj/Logistics_robot/window/build/CMakeFiles/CMakeScratch/TryCompile-t0iju8'
+      
+      Run Build Command(s): "C:/Program Files/CMake/bin/cmake.exe" -E env VERBOSE=1 C:/Users/yuuuj/.eide/bin/builder/msys/bin/make.exe -f Makefile cmTC_4e360/fast
+      /usr/bin/make  -f CMakeFiles/cmTC_4e360.dir/build.make CMakeFiles/cmTC_4e360.dir/build
+      make[1]: Entering directory `/c/Users/yuuuj/Logistics_robot/window/build/CMakeFiles/CMakeScratch/TryCompile-t0iju8'
+      Building C object CMakeFiles/cmTC_4e360.dir/testCCompiler.c.obj
+      C:/ST/STM32CubeCLT/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe    -o CMakeFiles/cmTC_4e360.dir/testCCompiler.c.obj -c C:/Users/yuuuj/Logistics_robot/window/build/CMakeFiles/CMakeScratch/TryCompile-t0iju8/testCCompiler.c
+      Linking C executable cmTC_4e360.exe
+      "C:/Program Files/CMake/bin/cmake.exe" -E rm -f CMakeFiles/cmTC_4e360.dir/objects.a
+      C:/ST/STM32CubeCLT/GNU-tools-for-STM32/bin/arm-none-eabi-ar.exe qc CMakeFiles/cmTC_4e360.dir/objects.a @CMakeFiles/cmTC_4e360.dir/objects1.rsp
+      C:/ST/STM32CubeCLT/GNU-tools-for-STM32/bin/arm-none-eabi-gcc.exe -Wl,--whole-archive CMakeFiles/cmTC_4e360.dir/objects.a -Wl,--no-whole-archive -o cmTC_4e360.exe -Wl,--out-implib,libcmTC_4e360.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_4e360.dir/linkLibs.rsp
+      c:/ST/STM32CubeCLT/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: unrecognized option '--major-image-version'
+      c:/ST/STM32CubeCLT/GNU-tools-for-STM32/bin/../lib/gcc/arm-none-eabi/11.3.1/../../../../arm-none-eabi/bin/ld.exe: use the --help option for usage information
+collect2.exe : error : ld returned 1 exit status
+      make[1]: *** [cmTC_4e360.exe] Error 1
+      make[1]: Leaving directory `/c/Users/yuuuj/Logistics_robot/window/build/CMakeFiles/CMakeScratch/TryCompile-t0iju8'
+      make: *** [cmTC_4e360/fast] Error 2
+      
+      
+  
+    
+  
+    CMake will not be able to correctly generate this project.
+  Call Stack (most recent call first):
+    CMakeLists.txt:2 (project)
+  
+  
+  -- Configuring incomplete, errors occurred!
+  CMake Configure step failed.  Build files cannot be regenerated correctly.  Attempting to stop IDE build.
+  시스템이 지정된 일괄 레이블을 찾을 수 없습니다 - VCEnd
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppCommon.targets(224,5): error MSB8066: 'C:\Users\yuuuj\Logistics_robot\window\build\CMakeFiles\242ef1f85373d087c058e8456f1a4186\generate.stamp.rule'에 대한 사용자 지정 빌드가 종료되었습니다(코드 1).

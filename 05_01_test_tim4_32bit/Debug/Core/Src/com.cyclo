@@ -1,0 +1,7 @@
+../Core/Src/com.c:58:1:__io_putchar	1
+../Core/Src/com.c:64:5:_write	1
+../Core/Src/com.c:69:6:SerialSendChar_PC	2
+../Core/Src/com.c:78:6:SerialSendChar_ESP	2
+../Core/Src/com.c:94:6:STM32_to_ESP	3
+../Core/Src/com.c:142:6:UART3_RX_PC_to_STM32	41
+../Core/Src/com.c:396:6:UART4_RX_ESP_to_STM32	11
