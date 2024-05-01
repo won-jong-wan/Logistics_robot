@@ -1,0 +1,7 @@
+../Core/Src/com.c:61:1:__io_putchar	16	static
+../Core/Src/com.c:67:5:_write	24	static
+../Core/Src/com.c:72:6:SerialSendChar_PC	16	static
+../Core/Src/com.c:81:6:SerialSendChar_ESP	16	static
+../Core/Src/com.c:97:6:STM32_to_ESP	8	static
+../Core/Src/com.c:145:6:UART3_RX_PC_to_STM32	8	static
+../Core/Src/com.c:398:6:UART4_RX_ESP_to_STM32	8	static
