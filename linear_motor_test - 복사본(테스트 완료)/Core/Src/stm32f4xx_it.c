@@ -1,0 +1,636 @@
+/* USER CODE BEGIN Header */
+/**
+ ******************************************************************************
+ * @file    stm32f4xx_it.c
+ * @brief   Interrupt Service Routines.
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2024 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
+/* USER CODE END Header */
+
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "stm32f4xx_it.h"
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#include "sensor.h"
+#include "pid.h"
+#include "step.h"
+#include "linear.h"
+
+
+extern int position_start;   //pid 스타트
+extern int position_start_Y;
+
+extern int vt_start;  //전
+extern int vt_start_Y;  //전
+
+///////////////////////////////ADC
+
+int k;
+float battery_V;
+float battery_V_avg;
+float battery_V_sum;
+
+extern uint16_t ADC3_value[3];
+uint16_t ADC3_IN12;
+uint16_t ADC3_IN13;
+uint16_t ADC3_IN14;
+///////////////////////////////////타이머 플래그
+int tim7_flag = 0;
+int tim6_flag = 0;
+int tim14_flag = 0;
+int tim13_flag = 0;
+int tim12_flag = 0;
+int tim12_test = 0;
+int tim11_flag = 0;
+
+//////////////////////전류센서
+
+float sensitivity = 0.255;
+
+int rawVoltage_count = 0;
+float rawVoltage_avg = 0;
+float rawVoltage_sum = 0;
+
+uint16_t readValue;
+
+float rawVoltage;
+
+float current_mA_X;
+float current_A_X;
+float current_A_floor_X;
+
+////////////////////////////////    스텝모터
+uint32_t step_pulse_count_tim13 = 0;
+uint16_t step_pulse_count_tim11 = 0;
+
+extern uint16_t shaft_step;
+extern uint16_t shaft_pulse_cycle;
+
+extern uint16_t ball_screw_step;
+extern uint16_t ball_screw_pulse_cycle;
+
+//////////////////////////////////
+
+
+
+//extern double p_encoder;
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN TD */
+
+/* USER CODE END TD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+/* USER CODE BEGIN PV */
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+/* USER CODE BEGIN PFP */
+
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+
+uint32_t photo_in_encoder_X;
+uint32_t photo_out_encoder_X;
+extern uint32_t encoder_count_x;
+
+
+
+#define EXTI_GPIO_PIN GPIO_PIN_8
+#define EXTI_GPIO_PORT GPIOB
+
+
+uint8_t fallingEdgeHandled = 0;
+uint8_t risingEdgeHandled = 0;
+
+
+
+extern int loop;
+int sttop=0;
+
+
+
+
+
+/* USER CODE END 0 */
+
+/* External variables --------------------------------------------------------*/
+extern DMA_HandleTypeDef hdma_adc3;
+extern ADC_HandleTypeDef hadc3;
+extern TIM_HandleTypeDef htim4;
+extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim8;
+extern TIM_HandleTypeDef htim11;
+extern TIM_HandleTypeDef htim13;
+extern TIM_HandleTypeDef htim14;
+extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart3;
+/* USER CODE BEGIN EV */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+
+	if (huart->Instance == USART3) {
+
+		UART3_RX_PC_to_STM32(); // UART3: STM32 <-> PC
+	}
+
+	if (huart->Instance == UART4) {
+
+		UART4_RX_ESP_to_STM32();  // UART4: esp <-> stm32
+	}
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
+
+	if (hadc->Instance == hadc3.Instance)
+
+	{
+
+		//GPIOB->ODR ^= 1 << 0;  //ok
+
+		ADC3_IN14 = ADC3_value[2];
+
+		battery_V = 16.059 * ADC3_IN14 / 67.8 * 27.667 + 2.2;
+
+		battery_V_sum = battery_V + battery_V_sum;
+
+		k++;
+		if (k == 2000) {
+			battery_V_avg = battery_V_sum / 2001;
+
+			k = 0;
+			battery_V_sum = 0;
+		}
+
+		ADC3_IN12 = ADC3_value[0];
+
+		/*
+		 readValue = ADC3_IN13;
+		 rawVoltage = (float) readValue * 3.3 * 2 / 4095;
+		 // If rawVoltage is not 2.5Volt, multiply by a factor.In my case it is 1.035
+		 // This is due to tolerance in voltage divider resister & ADC accuracy
+		 current =(rawVoltage - 2.5)/sensitivity;
+		 */
+
+		readValue = ADC3_value[1];
+		//  readValue=readValue*0.6870; //
+		rawVoltage_sum = rawVoltage_sum + readValue;
+		rawVoltage_count++;
+		if (rawVoltage_count == 200) {
+			rawVoltage_avg = rawVoltage_sum / (200);
+			rawVoltage_sum = 0;
+			rawVoltage_count = 0;
+		}
+
+		//rawVoltage_avg=rawVoltage_avg*0.6887;
+		current_A_X = (rawVoltage_avg - (3256)) * 5 / 4095 / 0.253;
+
+		current_A_floor_X = floor(current_A_X * 100) / 100; // 소수점 둘재짜리까지 표시
+		current_mA_X = current_A_X * 1000;
+
+	}
+
+}
+
+/* USER CODE END EV */
+
+/******************************************************************************/
+/*           Cortex-M4 Processor Interruption and Exception Handlers          */
+/******************************************************************************/
+/**
+  * @brief This function handles Non maskable interrupt.
+  */
+void NMI_Handler(void)
+{
+  /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
+
+  /* USER CODE END NonMaskableInt_IRQn 0 */
+  /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
+	while (1) {
+	}
+  /* USER CODE END NonMaskableInt_IRQn 1 */
+}
+
+/**
+  * @brief This function handles Hard fault interrupt.
+  */
+void HardFault_Handler(void)
+{
+  /* USER CODE BEGIN HardFault_IRQn 0 */
+
+  /* USER CODE END HardFault_IRQn 0 */
+  while (1)
+  {
+    /* USER CODE BEGIN W1_HardFault_IRQn 0 */
+    /* USER CODE END W1_HardFault_IRQn 0 */
+  }
+}
+
+/**
+  * @brief This function handles Memory management fault.
+  */
+void MemManage_Handler(void)
+{
+  /* USER CODE BEGIN MemoryManagement_IRQn 0 */
+
+  /* USER CODE END MemoryManagement_IRQn 0 */
+  while (1)
+  {
+    /* USER CODE BEGIN W1_MemoryManagement_IRQn 0 */
+    /* USER CODE END W1_MemoryManagement_IRQn 0 */
+  }
+}
+
+/**
+  * @brief This function handles Pre-fetch fault, memory access fault.
+  */
+void BusFault_Handler(void)
+{
+  /* USER CODE BEGIN BusFault_IRQn 0 */
+
+  /* USER CODE END BusFault_IRQn 0 */
+  while (1)
+  {
+    /* USER CODE BEGIN W1_BusFault_IRQn 0 */
+    /* USER CODE END W1_BusFault_IRQn 0 */
+  }
+}
+
+/**
+  * @brief This function handles Undefined instruction or illegal state.
+  */
+void UsageFault_Handler(void)
+{
+  /* USER CODE BEGIN UsageFault_IRQn 0 */
+
+  /* USER CODE END UsageFault_IRQn 0 */
+  while (1)
+  {
+    /* USER CODE BEGIN W1_UsageFault_IRQn 0 */
+    /* USER CODE END W1_UsageFault_IRQn 0 */
+  }
+}
+
+/**
+  * @brief This function handles System service call via SWI instruction.
+  */
+void SVC_Handler(void)
+{
+  /* USER CODE BEGIN SVCall_IRQn 0 */
+
+  /* USER CODE END SVCall_IRQn 0 */
+  /* USER CODE BEGIN SVCall_IRQn 1 */
+
+  /* USER CODE END SVCall_IRQn 1 */
+}
+
+/**
+  * @brief This function handles Debug monitor.
+  */
+void DebugMon_Handler(void)
+{
+  /* USER CODE BEGIN DebugMonitor_IRQn 0 */
+
+  /* USER CODE END DebugMonitor_IRQn 0 */
+  /* USER CODE BEGIN DebugMonitor_IRQn 1 */
+
+  /* USER CODE END DebugMonitor_IRQn 1 */
+}
+
+/**
+  * @brief This function handles Pendable request for system service.
+  */
+void PendSV_Handler(void)
+{
+  /* USER CODE BEGIN PendSV_IRQn 0 */
+
+  /* USER CODE END PendSV_IRQn 0 */
+  /* USER CODE BEGIN PendSV_IRQn 1 */
+
+  /* USER CODE END PendSV_IRQn 1 */
+}
+
+/**
+  * @brief This function handles System tick timer.
+  */
+void SysTick_Handler(void)
+{
+  /* USER CODE BEGIN SysTick_IRQn 0 */
+
+  /* USER CODE END SysTick_IRQn 0 */
+  HAL_IncTick();
+  /* USER CODE BEGIN SysTick_IRQn 1 */
+
+  /* USER CODE END SysTick_IRQn 1 */
+}
+
+/******************************************************************************/
+/* STM32F4xx Peripheral Interrupt Handlers                                    */
+/* Add here the Interrupt Handlers for the used peripherals.                  */
+/* For the available peripheral interrupt handler names,                      */
+/* please refer to the startup file (startup_stm32f4xx.s).                    */
+/******************************************************************************/
+
+/**
+  * @brief This function handles ADC1, ADC2 and ADC3 global interrupts.
+  */
+void ADC_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC_IRQn 0 */
+
+  /* USER CODE END ADC_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc3);
+  /* USER CODE BEGIN ADC_IRQn 1 */
+
+  /* USER CODE END ADC_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM1 trigger and commutation interrupts and TIM11 global interrupt.
+  */
+void TIM1_TRG_COM_TIM11_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 0 */
+
+  /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim11);
+  /* USER CODE BEGIN TIM1_TRG_COM_TIM11_IRQn 1 */
+	//	tim11_flag = 1;
+	//step_pulse_count_tim11++;
+//	GPIOB->ODR ^= 1 << 0;
+//	z_axis_step_motor(ball_screw_step, ball_screw_pulse_cycle); //(스텝,주기) 펄스:400당 한바퀴
+  /* USER CODE END TIM1_TRG_COM_TIM11_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM4 global interrupt.
+  */
+void TIM4_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM4_IRQn 0 */
+
+  /* USER CODE END TIM4_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim4);
+  /* USER CODE BEGIN TIM4_IRQn 1 */
+
+  /* USER CODE END TIM4_IRQn 1 */
+}
+
+/**
+  * @brief This function handles USART3 global interrupt.
+  */
+void USART3_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART3_IRQn 0 */
+
+  /* USER CODE END USART3_IRQn 0 */
+  HAL_UART_IRQHandler(&huart3);
+  /* USER CODE BEGIN USART3_IRQn 1 */
+
+  /* USER CODE END USART3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM8 update interrupt and TIM13 global interrupt.
+  */
+void TIM8_UP_TIM13_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 0 */
+
+  /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim8);
+  HAL_TIM_IRQHandler(&htim13);
+  /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */
+
+	/*	if ((TIM13->SR & 0x01) != RESET)	// CC1 interrupt flag
+	 {
+	 TIM13->SR &= ~0x01;	// CC1 Interrupt Claer
+
+
+	 step_pulse_count_tim13++;
+
+	 shaft_step_motor(shaft_step, shaft_pulse_cycle); //(스텝,주기) 펄스:400당 한바퀴
+
+	 }
+	 */
+  /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM8 trigger and commutation interrupts and TIM14 global interrupt.
+  */
+void TIM8_TRG_COM_TIM14_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 0 */
+
+  /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim8);
+  HAL_TIM_IRQHandler(&htim14);
+  /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 1 */
+
+  /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 1 */
+}
+
+/**
+  * @brief This function handles UART4 global interrupt.
+  */
+void UART4_IRQHandler(void)
+{
+  /* USER CODE BEGIN UART4_IRQn 0 */
+
+  /* USER CODE END UART4_IRQn 0 */
+  HAL_UART_IRQHandler(&huart4);
+  /* USER CODE BEGIN UART4_IRQn 1 */
+
+  /* USER CODE END UART4_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
+  */
+void TIM6_DAC_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+
+  /* USER CODE END TIM6_DAC_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
+
+	tim6_flag = 1;
+
+    /*      PID      */
+	if (position_start == 1)
+	{
+		position_pid_x();
+
+
+		GPIOB->ODR ^= 1 << 14;  //LD3
+	}
+
+	if (position_start_Y == 1)
+	{
+		position_pid_y();
+
+		GPIOB->ODR ^= 1 << 14;  //LD3
+	}
+
+
+
+
+	/*      V T       */
+	if (vt_start == 1)
+	{
+		VT_control_X();
+
+		GPIOB->ODR ^= 1 << 14;  //LD3
+	}
+	if (vt_start_Y == 1)
+	{
+		VT_control_Y();
+
+		GPIOB->ODR ^= 1 << 14;  //LD3
+	}
+	/*	 ?? 오류 발생 ??
+	 if (tim6_flag == 1) {
+	 distance_sensor();  //거리 센서
+	 tim6_flag = 0;
+	 }
+	 */
+  /* USER CODE END TIM6_DAC_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream1 global interrupt.
+  */
+void DMA2_Stream1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream1_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc3);
+  /* USER CODE BEGIN DMA2_Stream1_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream1_IRQn 1 */
+}
+
+/* USER CODE BEGIN 1 */
+
+void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim) {
+	if (htim->Instance == TIM11) {
+		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+
+			GPIOB->ODR ^= 1 << 0;
+
+			step_pulse_count_tim11++;
+			z_axis_step_motor(ball_screw_step, ball_screw_pulse_cycle); //(스텝,주기) 펄스:400당 한바퀴
+		}
+	}
+
+	if (htim->Instance == TIM13) {
+		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+
+			step_pulse_count_tim13++;
+			shaft_step_motor(shaft_step, shaft_pulse_cycle); //(스텝,주기) 펄스:400당 한바퀴
+		}
+
+	}
+}
+
+uint32_t tim4_encoder_overflow = 0;
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+	if (htim->Instance == TIM14) {  //tim14 : 0.01초 마다 rpm 측정
+
+		tim14_flag++;
+
+		dc_motor_RPM();
+
+		if (tim14_flag >= 10) { //0.1초 마다 ESP로 데이터 전송
+
+			STM32_to_ESP();
+			tim14_flag = 0;
+		}
+
+		extern float go_time;
+		extern float back_time;
+
+     	linear_time_count_GO(go_time); //1초 전진
+		linear_time_count_BACK(back_time);  //1.1초 후진 백래쉬 고려
+
+
+	}
+	if (htim->Instance == TIM4) {  //tim4 : y축 엔코더모드
+
+		if (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10) == 0)  //y축 방향 go
+		{
+			tim4_encoder_overflow += 0x10000; // 상위 16비트 증가 (오버플로우 발생 시)
+		}
+		else
+		{
+			tim4_encoder_overflow -= 0x10000; // 상위 16비트 감소 (오버플로우 발생 시)
+		}
+	}
+
+}
+
+int EXTI8_flag=0;
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+
+
+
+	if(GPIO_Pin == GPIO_PIN_8)  //8번 핀
+	  {
+		//  EXTI8_flag=1;
+
+		  GPIOB->ODR ^= 1 << 7;
+		//  sttop=loop;
+		  //EXTI->PR |= 0x0100;
+	  }
+
+
+}
+uint32_t capturedValue;  //test
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+{
+	if (htim->Instance == TIM9)
+	{
+//		if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1) {
+//
+//			GPIOB->ODR ^= 1 << 7;
+//							  sttop=loop;
+//				}
+		capturedValue = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_1);
+
+		//GPIOB->ODR ^= 1 << 7;
+			//					  sttop=loop;
+	}
+
+}
+/* USER CODE END 1 */
