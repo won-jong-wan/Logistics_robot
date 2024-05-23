@@ -1,0 +1,3 @@
+../Core/Src/sensor.c:19:6:distance_sensor	7
+../Core/Src/sensor.c:103:6:photo_sensor_1	6
+../Core/Src/sensor.c:154:6:photo_sensor_2	7
