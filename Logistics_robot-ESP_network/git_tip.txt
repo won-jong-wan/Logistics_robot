@@ -1,0 +1,25 @@
+//***************************************************//
+//								//
+//		반드시 pull 뒤에 push 진행!!		//
+//								//
+//***************************************************//
+파일 추가 및 수정 후
+git status
+git add -A
+git status
+git commit -a -m '하고싶은말(필수)'
+git log
+-> 여기서 만약에 탈출이 불가능 할 경우 shift+q 버튼 입력!
+-> 체크 후 push
+
+git push origin main
+(origin에서 main으로 가는 경우 push만 써도 됨)
+
+
+파일 불러오기
+git status
+git pull origin main
+
+(origin에서 main으로 가는 경우 pull만 써도 됨)
+
+
