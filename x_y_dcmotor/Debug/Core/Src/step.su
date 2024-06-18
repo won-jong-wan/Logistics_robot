@@ -1,2 +1,0 @@
-../Core/Src/step.c:16:6:shaft_step_motor	16	static
-../Core/Src/step.c:28:6:z_axis_step_motor	16	static
