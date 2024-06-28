@@ -1,0 +1,4 @@
+../Core/Src/sensor.c:25:6:distance_sensor	16	static
+../Core/Src/sensor.c:108:6:photo_sensor_1	8	static
+../Core/Src/sensor.c:172:6:photo_sensor_2	8	static
+../Core/Src/sensor.c:234:6:downpart_distance	8	static

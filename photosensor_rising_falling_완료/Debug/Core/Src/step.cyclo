@@ -1,0 +1,8 @@
+../Core/Src/step.c:30:6:shaft_step_motor	5
+../Core/Src/step.c:49:6:z_axis_step_motor	3
+../Core/Src/step.c:70:6:z_axis_UP	1
+../Core/Src/step.c:84:6:z_axis_DOWN	1
+../Core/Src/step.c:101:6:down_part_UP	1
+../Core/Src/step.c:113:6:down_part_DOWN	1
+../Core/Src/step.c:136:6:down_part_UP_accel	2
+../Core/Src/step.c:152:6:down_part_DOWN_accel	2

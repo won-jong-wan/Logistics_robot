@@ -1,0 +1,14 @@
+../Core/Src/pid.c:147:6:v_t_graph	56	static
+../Core/Src/pid.c:228:6:v_t_graph_DIR_GO_X	16	static
+../Core/Src/pid.c:239:6:v_t_graph_DIR_BACK_X	16	static
+../Core/Src/pid.c:251:6:v_t_graph_DIR_GO_Y	16	static
+../Core/Src/pid.c:264:6:v_t_graph_DIR_BACK_Y	16	static
+../Core/Src/pid.c:286:6:dc_motor_pid_X	16	static
+../Core/Src/pid.c:300:6:dc_motor_pid_Y	16	static
+../Core/Src/pid.c:314:6:dc_motor_pid_X_with_photosensor1	16	static
+../Core/Src/pid.c:329:6:dc_motor_pid_Y_with_photosensor2	16	static
+../Core/Src/pid.c:357:6:dc_motor_RPM	8	static
+../Core/Src/pid.c:462:6:VT_control_X	40	static
+../Core/Src/pid.c:539:6:VT_control_Y	40	static
+../Core/Src/pid.c:628:6:position_pid_x	24	static
+../Core/Src/pid.c:1181:6:position_pid_y	24	static
