@@ -1,0 +1,7 @@
+../Core/Src/sensor.c:29:6:distance_sensor	7
+../Core/Src/sensor.c:125:6:photo_sensor_1	15
+../Core/Src/sensor.c:257:6:photo_sensor_2	17
+../Core/Src/sensor.c:347:6:ball_limit_sw_max	5
+../Core/Src/sensor.c:389:6:ball_limit_sw_min	6
+../Core/Src/sensor.c:436:6:down_sw_max	5
+../Core/Src/sensor.c:516:6:downpart_distance_step_dintance	5
